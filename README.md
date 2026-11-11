@@ -1,5 +1,7 @@
 # azure-cloud-migration-planner
 
+![azure-cloud-migration-planner: project banner](docs/images/banner.png)
+
 [![Tests](https://github.com/pJijesh/azure-cloud-migration-planner/actions/workflows/test.yml/badge.svg)](https://github.com/pJijesh/azure-cloud-migration-planner/actions/workflows/test.yml) [![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE) ![Python 3.10 to 3.13](https://img.shields.io/badge/python-3.10%20to%203.13-blue.svg) ![Dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
 
 **Problem:** groups with a mixed legacy estate (old Windows servers, packaged ERP, in-house code, shop floor equipment, SaaS they forgot about) need to decide what happens to each application, in what order, and what it costs, but the answers usually live in a spreadsheet that nobody can explain and a business case nobody can reproduce.
