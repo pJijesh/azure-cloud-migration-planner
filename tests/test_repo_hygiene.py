@@ -114,7 +114,7 @@ def test_worked_example_quotes_the_real_output():
 def test_required_repository_files_exist():
     for name in ("README.md", "LICENSE", "CONTRIBUTING.md", ".gitignore", ".github/workflows/test.yml", "pyproject.toml"):
         assert (ROOT / name).is_file(), name
-    assert "Copyright (c) 2026 Jijesh Puliyappottammal" in (ROOT / "LICENSE").read_text(encoding="utf-8")
+    assert "Copyright (c) 2026 Puliyappottammal Jijesh" in (ROOT / "LICENSE").read_text(encoding="utf-8")
 
 
 def test_package_has_no_third_party_imports():
