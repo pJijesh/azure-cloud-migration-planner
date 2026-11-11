@@ -1,0 +1,11 @@
+app_id,name,owner,business_criticality,users,technology,os_or_platform,end_of_support_date,vendor_supported_in_cloud,data_sensitivity,dependencies,current_annual_cost,change_frequency,licence_model,notes
+S01,Directory,Owner,5,100,Platform service (directory service),Windows Server 2022,2030-01-01,yes,low,,10000,low,subscription,
+S02,Name service,Owner,4,100,Platform service (DNS),Windows Server 2022,2030-01-01,yes,low,S01,10000,low,subscription,
+A01,Test site,Owner,2,100,Packaged application,Windows Server 2022,2030-01-01,yes,low,,10000,low,subscription,
+A02,File share,Owner,3,100,File server,Windows Server 2022,2030-01-01,yes,low,S01,10000,low,subscription,
+A03,Order database,Owner,3,100,Database (SQL Server),Windows Server 2022,2030-01-01,yes,low,S01,10000,low,subscription,
+A04,Order system,Owner,5,100,Packaged application (ERP),Windows Server 2022,2030-01-01,yes,low,S01;S02;A03,10000,low,subscription,
+A05,Stock system,Owner,4,100,Packaged application,Windows Server 2022,2030-01-01,yes,low,A04;A06,10000,low,subscription,
+A06,Shipping system,Owner,4,100,Packaged application,Windows Server 2022,2030-01-01,yes,low,A04;A05,10000,low,subscription,
+A07,Reports,Owner,3,100,Database (data warehouse),Windows Server 2022,2030-01-01,yes,low,A04;A05,10000,low,subscription,
+A08,Machine gateway,Owner,5,100,Packaged application (PLC gateway),Windows Server 2022,2030-01-01,no,low,S01,10000,low,subscription,Talks to PLC equipment

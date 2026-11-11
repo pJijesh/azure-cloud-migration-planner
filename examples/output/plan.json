@@ -1,0 +1,2809 @@
+{
+  "tool": "migration_planner",
+  "version": "0.1.0",
+  "kind": "plan",
+  "assessment": {
+    "tool": "migration_planner",
+    "version": "0.1.0",
+    "kind": "assessment",
+    "inputs": {
+      "inventory_file": "inventory.csv",
+      "inventory_sha256": "3e8cc0d5c4c427630156915c5a9339d41f0494343d2521e5339a469ed626738e",
+      "overrides_file": null,
+      "overrides_sha256": null,
+      "rules_sha256": "514b5efec22c1204422eac25e2f58a5b79032dfe3512f3a1c39c8af31e769734",
+      "as_of": "2026-11-11"
+    },
+    "summary": {
+      "applications": 42,
+      "in_scope": 39,
+      "needs_review": 19,
+      "by_disposition": {
+        "rehost": 21,
+        "replatform": 9,
+        "refactor": 1,
+        "repurchase": 1,
+        "retire": 2,
+        "retain": 8
+      },
+      "current_annual_cost_by_disposition": {
+        "rehost": 893500.0,
+        "replatform": 291000.0,
+        "refactor": 46000.0,
+        "repurchase": 18000.0,
+        "retire": 11500.0,
+        "retain": 459000.0
+      }
+    },
+    "warnings": [],
+    "apps": [
+      {
+        "app_id": "APP001",
+        "name": "Directory services (domain controllers)",
+        "owner": "Group IT Operations",
+        "business_criticality": 5,
+        "users": 1450,
+        "technology": "Platform service (directory service)",
+        "os_or_platform": "Windows Server 2019",
+        "end_of_support_date": "2029-01-09",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "high",
+        "dependencies": [],
+        "current_annual_cost": 38000.0,
+        "change_frequency": "low",
+        "licence_model": "perpetual",
+        "notes": "Seven sites. Authentication for most other applications.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "platform_service",
+        "eos_status": "later",
+        "dependents_count": 26,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 3,
+          "refactor": -7,
+          "repurchase": -2,
+          "retire": -4,
+          "retain": 1
+        },
+        "runner_up": "replatform",
+        "margin": 1,
+        "flags": [
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Business criticality is 5. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "A shared platform service. These usually move to the cloud equivalent, and the landing zone design depends on them, so they are scheduled early. [R20: replatform +2]",
+          "Data sensitivity is high. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]",
+          "26 other applications depend on it, so a change in behaviour ripples out. Prefer a route that keeps interfaces the same. [R23: refactor -1, repurchase -1]"
+        ],
+        "actions": [
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP002",
+        "name": "DNS and DHCP",
+        "owner": "Group IT Operations",
+        "business_criticality": 5,
+        "users": 1450,
+        "technology": "Platform service (DNS and DHCP)",
+        "os_or_platform": "Windows Server 2019",
+        "end_of_support_date": "2029-01-09",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP001"
+        ],
+        "current_annual_cost": 9000.0,
+        "change_frequency": "low",
+        "licence_model": "perpetual",
+        "notes": "",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "platform_service",
+        "eos_status": "later",
+        "dependents_count": 3,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 3,
+          "refactor": -6,
+          "repurchase": -1,
+          "retire": -4,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 1,
+        "flags": [],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Business criticality is 5. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "A shared platform service. These usually move to the cloud equivalent, and the landing zone design depends on them, so they are scheduled early. [R20: replatform +2]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP003",
+        "name": "Internal certificate authority",
+        "owner": "Group IT Operations",
+        "business_criticality": 4,
+        "users": 60,
+        "technology": "Platform service (certificate services)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "high",
+        "dependencies": [
+          "APP001"
+        ],
+        "current_annual_cost": 6000.0,
+        "change_frequency": "low",
+        "licence_model": "perpetual",
+        "notes": "Issues certificates for internal web applications and Wi-Fi.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "platform_service",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 4,
+          "refactor": -6,
+          "repurchase": 0,
+          "retire": -4,
+          "retain": 1
+        },
+        "runner_up": "replatform",
+        "margin": 0,
+        "flags": [
+          "tie_broken_by_order",
+          "end_of_support_soon",
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "A shared platform service. These usually move to the cloud equivalent, and the landing zone design depends on them, so they are scheduled early. [R20: replatform +2]",
+          "Data sensitivity is high. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]",
+          "Two dispositions scored the same, so the tie was broken by the configured order. Treat rehost and replatform as equally open."
+        ],
+        "actions": [
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP004",
+        "name": "Backup platform",
+        "owner": "Group IT Operations",
+        "business_criticality": 4,
+        "users": 12,
+        "technology": "Platform service (backup)",
+        "os_or_platform": "Vendor appliance, Linux based",
+        "end_of_support_date": "",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001"
+        ],
+        "current_annual_cost": 52000.0,
+        "change_frequency": "low",
+        "licence_model": "subscription",
+        "notes": "Backs up servers at all sites.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "platform_service",
+        "eos_status": "none",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 3,
+          "refactor": -6,
+          "repurchase": -1,
+          "retire": -4,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 1,
+        "flags": [],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "A shared platform service. These usually move to the cloud equivalent, and the landing zone design depends on them, so they are scheduled early. [R20: replatform +2]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP005",
+        "name": "Monitoring and alerting",
+        "owner": "Group IT Operations",
+        "business_criticality": 3,
+        "users": 15,
+        "technology": "Platform service (monitoring)",
+        "os_or_platform": "Linux",
+        "end_of_support_date": "",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP001",
+          "APP002"
+        ],
+        "current_annual_cost": 14000.0,
+        "change_frequency": "medium",
+        "licence_model": "open source",
+        "notes": "",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "platform_service",
+        "eos_status": "none",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 3,
+          "refactor": -4,
+          "repurchase": 0,
+          "retire": 0,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 0,
+        "flags": [
+          "tie_broken_by_order"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "A shared platform service. These usually move to the cloud equivalent, and the landing zone design depends on them, so they are scheduled early. [R20: replatform +2]",
+          "Two dispositions scored the same, so the tie was broken by the configured order. Treat rehost and replatform as equally open."
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP006",
+        "name": "Print servers",
+        "owner": "Group IT Operations",
+        "business_criticality": 2,
+        "users": 900,
+        "technology": "Platform service (print server)",
+        "os_or_platform": "Windows Server 2012 R2",
+        "end_of_support_date": "2023-10-10",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP001"
+        ],
+        "current_annual_cost": 11000.0,
+        "change_frequency": "none",
+        "licence_model": "perpetual",
+        "notes": "Three servers, one per larger site.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "platform_service",
+        "eos_status": "past",
+        "dependents_count": 0,
+        "disposition": "replatform",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 6,
+          "refactor": -3,
+          "repurchase": 2,
+          "retire": 1,
+          "retain": -2
+        },
+        "runner_up": "rehost",
+        "margin": 3,
+        "flags": [
+          "end_of_support_passed"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support for the operating system or product ended on 2023-10-10. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired. [R08: replatform +3, refactor +1, repurchase +2, retire +1, retain -2]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "A shared platform service. These usually move to the cloud equivalent, and the landing zone design depends on them, so they are scheduled early. [R20: replatform +2]"
+        ],
+        "actions": [
+          "If a stopgap is unavoidable, check Microsoft's current terms for Extended Security Updates and record a dated exit."
+        ]
+      },
+      {
+        "app_id": "APP007",
+        "name": "SFTP and EDI gateway",
+        "owner": "Supply Chain Director",
+        "business_criticality": 4,
+        "users": 40,
+        "technology": "Platform service (SFTP and EDI gateway)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001",
+          "APP002"
+        ],
+        "current_annual_cost": 28000.0,
+        "change_frequency": "medium",
+        "licence_model": "subscription",
+        "notes": "Exchanges orders and invoices with customers and carriers.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "platform_service",
+        "eos_status": "soon",
+        "dependents_count": 3,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 4,
+          "refactor": -6,
+          "repurchase": 0,
+          "retire": -4,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 0,
+        "flags": [
+          "tie_broken_by_order",
+          "end_of_support_soon"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "A shared platform service. These usually move to the cloud equivalent, and the landing zone design depends on them, so they are scheduled early. [R20: replatform +2]",
+          "Two dispositions scored the same, so the tie was broken by the configured order. Treat rehost and replatform as equally open."
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP008",
+        "name": "ERP application tier",
+        "owner": "Finance Director",
+        "business_criticality": 5,
+        "users": 430,
+        "technology": "Packaged application (ERP)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "high",
+        "dependencies": [
+          "APP001",
+          "APP007",
+          "APP009"
+        ],
+        "current_annual_cost": 310000.0,
+        "change_frequency": "medium",
+        "licence_model": "subscription",
+        "notes": "Finance, purchasing, stock and works orders. Vendor release twice a year.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "soon",
+        "dependents_count": 15,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 2,
+          "refactor": -7,
+          "repurchase": -1,
+          "retire": -4,
+          "retain": 1
+        },
+        "runner_up": "replatform",
+        "margin": 2,
+        "flags": [
+          "end_of_support_soon",
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Business criticality is 5. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "Data sensitivity is high. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]",
+          "15 other applications depend on it, so a change in behaviour ripples out. Prefer a route that keeps interfaces the same. [R23: refactor -1, repurchase -1]"
+        ],
+        "actions": [
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP009",
+        "name": "ERP database",
+        "owner": "Finance Director",
+        "business_criticality": 5,
+        "users": 430,
+        "technology": "Database (SQL Server)",
+        "os_or_platform": "SQL Server 2016 on Windows Server 2016",
+        "end_of_support_date": "2026-07-14",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "high",
+        "dependencies": [
+          "APP001"
+        ],
+        "current_annual_cost": 120000.0,
+        "change_frequency": "low",
+        "licence_model": "per-core",
+        "notes": "Extended support for this database version has ended.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "database",
+        "eos_status": "past",
+        "dependents_count": 4,
+        "disposition": "replatform",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 7,
+          "refactor": -5,
+          "repurchase": 1,
+          "retire": -3,
+          "retain": -1
+        },
+        "runner_up": "rehost",
+        "margin": 3,
+        "flags": [
+          "end_of_support_passed",
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support for the operating system or product ended on 2026-07-14. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired. [R08: replatform +3, refactor +1, repurchase +2, retire +1, retain -2]",
+          "Business criticality is 5. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "A database often benefits from a managed service, which removes patching and backup work. Check engine version and feature compatibility first. [R18: replatform +3]",
+          "Data sensitivity is high. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]"
+        ],
+        "actions": [
+          "If a stopgap is unavoidable, check Microsoft's current terms for Extended Security Updates and record a dated exit.",
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP010",
+        "name": "ERP test and training environment",
+        "owner": "Finance Director",
+        "business_criticality": 2,
+        "users": 25,
+        "technology": "Packaged application (ERP)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [],
+        "current_annual_cost": 18000.0,
+        "change_frequency": "medium",
+        "licence_model": "subscription",
+        "notes": "Copy of production refreshed by restore. Local accounts only, no live links.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 2,
+          "refactor": -4,
+          "repurchase": 1,
+          "retire": 0,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 1,
+        "flags": [
+          "end_of_support_soon"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP011",
+        "name": "Group consolidation and reporting",
+        "owner": "Group Financial Controller",
+        "business_criticality": 4,
+        "users": 18,
+        "technology": "Packaged application (consolidation)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "high",
+        "dependencies": [
+          "APP008",
+          "APP009"
+        ],
+        "current_annual_cost": 36000.0,
+        "change_frequency": "low",
+        "licence_model": "subscription",
+        "notes": "Month end and year end critical.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 2,
+          "refactor": -6,
+          "repurchase": 0,
+          "retire": -4,
+          "retain": 1
+        },
+        "runner_up": "replatform",
+        "margin": 2,
+        "flags": [
+          "end_of_support_soon",
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "Data sensitivity is high. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]"
+        ],
+        "actions": [
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP012",
+        "name": "Payroll",
+        "owner": "HR Director",
+        "business_criticality": 5,
+        "users": 1300,
+        "technology": "SaaS (payroll)",
+        "os_or_platform": "Vendor hosted",
+        "end_of_support_date": "",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "restricted",
+        "dependencies": [],
+        "current_annual_cost": 64000.0,
+        "change_frequency": "low",
+        "licence_model": "saas",
+        "notes": "Already a vendor hosted service.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "saas",
+        "eos_status": "none",
+        "dependents_count": 1,
+        "disposition": "retain",
+        "in_scope": false,
+        "confidence": "high",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 1,
+          "refactor": -6,
+          "repurchase": -1,
+          "retire": -4,
+          "retain": 1
+        },
+        "runner_up": "",
+        "margin": null,
+        "flags": [],
+        "reasons": [
+          "Already delivered as SaaS, so there is nothing to migrate. It is left out of the waves and out of the cost comparison. Check that its integrations still work after the apps around it move. [R01: decides: retain]",
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Business criticality is 5. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "Data sensitivity is restricted. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP013",
+        "name": "Treasury and bank connectivity",
+        "owner": "Group Treasurer",
+        "business_criticality": 5,
+        "users": 6,
+        "technology": "Packaged application (treasury)",
+        "os_or_platform": "Windows Server 2019",
+        "end_of_support_date": "2029-01-09",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "restricted",
+        "dependencies": [
+          "APP007",
+          "APP008"
+        ],
+        "current_annual_cost": 41000.0,
+        "change_frequency": "low",
+        "licence_model": "subscription",
+        "notes": "Sends payment files to banks.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "later",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 1,
+          "refactor": -6,
+          "repurchase": -1,
+          "retire": -4,
+          "retain": 1
+        },
+        "runner_up": "replatform",
+        "margin": 3,
+        "flags": [
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Business criticality is 5. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "Data sensitivity is restricted. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]"
+        ],
+        "actions": [
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP014",
+        "name": "Fixed asset register (old)",
+        "owner": "Group Financial Controller",
+        "business_criticality": 1,
+        "users": 2,
+        "technology": "Packaged application (fixed assets)",
+        "os_or_platform": "Windows Server 2012 R2",
+        "end_of_support_date": "2023-10-10",
+        "vendor_supported_in_cloud": "unknown",
+        "data_sensitivity": "medium",
+        "dependencies": [],
+        "current_annual_cost": 7000.0,
+        "change_frequency": "none",
+        "licence_model": "perpetual",
+        "notes": "Superseded by the ERP asset module. Kept for audit look-ups.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "past",
+        "dependents_count": 0,
+        "disposition": "retire",
+        "in_scope": true,
+        "confidence": "high",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 1,
+          "replatform": 2,
+          "refactor": -3,
+          "repurchase": 2,
+          "retire": 12,
+          "retain": -1
+        },
+        "runner_up": "replatform",
+        "margin": 10,
+        "flags": [],
+        "reasons": [
+          "Vendor support in the cloud has not been confirmed. The score is held back until it is, because moving an application on an assumption is how migrations fail. [R05: rehost -1, replatform -1, retain +1]",
+          "Support for the operating system or product ended on 2023-10-10. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired. [R08: replatform +3, refactor +1, repurchase +2, retire +1, retain -2]",
+          "Only 2 user(s) and business criticality 1. Low use and low criticality make this a retirement candidate. [R10: retire +5]",
+          "The notes suggest the application is duplicated, superseded or no longer used. [R11: retire +4]",
+          "Nobody changes it, few people use it and it is not critical. [R12: retire +2]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]"
+        ],
+        "actions": [
+          "Confirm with the owner that nobody needs the function, and agree what happens to the data (archive or delete).",
+          "Confirm with the owner and check for hidden dependants before retiring."
+        ]
+      },
+      {
+        "app_id": "APP015",
+        "name": "Head office file server",
+        "owner": "Group IT Operations",
+        "business_criticality": 4,
+        "users": 380,
+        "technology": "File server",
+        "os_or_platform": "Windows Server 2012 R2",
+        "end_of_support_date": "2023-10-10",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "high",
+        "dependencies": [
+          "APP001",
+          "APP002"
+        ],
+        "current_annual_cost": 34000.0,
+        "change_frequency": "medium",
+        "licence_model": "perpetual",
+        "notes": "Department shares and home folders.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "file_service",
+        "eos_status": "past",
+        "dependents_count": 1,
+        "disposition": "replatform",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 7,
+          "refactor": -5,
+          "repurchase": 1,
+          "retire": -3,
+          "retain": -1
+        },
+        "runner_up": "rehost",
+        "margin": 3,
+        "flags": [
+          "end_of_support_passed",
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support for the operating system or product ended on 2023-10-10. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired. [R08: replatform +3, refactor +1, repurchase +2, retire +1, retain -2]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "File services usually move to a managed file or collaboration service rather than a like-for-like virtual machine. Check permissions, long paths and applications that use drive letters. [R19: replatform +3]",
+          "Data sensitivity is high. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]"
+        ],
+        "actions": [
+          "If a stopgap is unavoidable, check Microsoft's current terms for Extended Security Updates and record a dated exit.",
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP016",
+        "name": "Castings plant file server",
+        "owner": "Castings Plant Manager",
+        "business_criticality": 3,
+        "users": 140,
+        "technology": "File server",
+        "os_or_platform": "Windows Server 2012 R2",
+        "end_of_support_date": "2023-10-10",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001"
+        ],
+        "current_annual_cost": 18000.0,
+        "change_frequency": "medium",
+        "licence_model": "perpetual",
+        "notes": "",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "file_service",
+        "eos_status": "past",
+        "dependents_count": 0,
+        "disposition": "replatform",
+        "in_scope": true,
+        "confidence": "high",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 7,
+          "refactor": -3,
+          "repurchase": 2,
+          "retire": 1,
+          "retain": -2
+        },
+        "runner_up": "rehost",
+        "margin": 4,
+        "flags": [
+          "end_of_support_passed"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support for the operating system or product ended on 2023-10-10. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired. [R08: replatform +3, refactor +1, repurchase +2, retire +1, retain -2]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "File services usually move to a managed file or collaboration service rather than a like-for-like virtual machine. Check permissions, long paths and applications that use drive letters. [R19: replatform +3]"
+        ],
+        "actions": [
+          "If a stopgap is unavoidable, check Microsoft's current terms for Extended Security Updates and record a dated exit."
+        ]
+      },
+      {
+        "app_id": "APP017",
+        "name": "Distribution centre file server",
+        "owner": "Distribution Centre Manager",
+        "business_criticality": 3,
+        "users": 90,
+        "technology": "File server",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001"
+        ],
+        "current_annual_cost": 16000.0,
+        "change_frequency": "medium",
+        "licence_model": "perpetual",
+        "notes": "",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "file_service",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "replatform",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 5,
+          "refactor": -4,
+          "repurchase": 1,
+          "retire": 0,
+          "retain": 0
+        },
+        "runner_up": "rehost",
+        "margin": 2,
+        "flags": [
+          "end_of_support_soon"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "File services usually move to a managed file or collaboration service rather than a like-for-like virtual machine. Check permissions, long paths and applications that use drive letters. [R19: replatform +3]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP018",
+        "name": "Engineering drawings vault",
+        "owner": "Engineering Manager",
+        "business_criticality": 4,
+        "users": 45,
+        "technology": "Packaged application (document vault)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "high",
+        "dependencies": [
+          "APP001",
+          "APP015"
+        ],
+        "current_annual_cost": 29000.0,
+        "change_frequency": "medium",
+        "licence_model": "subscription",
+        "notes": "Controlled drawings. Product designs are commercially sensitive.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 2,
+          "refactor": -6,
+          "repurchase": 0,
+          "retire": -4,
+          "retain": 1
+        },
+        "runner_up": "replatform",
+        "margin": 2,
+        "flags": [
+          "end_of_support_soon",
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "Data sensitivity is high. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]"
+        ],
+        "actions": [
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP019",
+        "name": "Shop floor controller gateway",
+        "owner": "Castings Plant Manager",
+        "business_criticality": 5,
+        "users": 25,
+        "technology": "Packaged application (shop floor gateway to PLC equipment)",
+        "os_or_platform": "Industrial PC, vendor supplied image",
+        "end_of_support_date": "",
+        "vendor_supported_in_cloud": "no",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP001"
+        ],
+        "current_annual_cost": 22000.0,
+        "change_frequency": "low",
+        "licence_model": "oem",
+        "notes": "Connects production machines to the plant systems.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "none",
+        "dependents_count": 2,
+        "disposition": "retain",
+        "in_scope": true,
+        "confidence": "high",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": -3,
+          "replatform": -5,
+          "refactor": -5,
+          "repurchase": 3,
+          "retire": -4,
+          "retain": 9
+        },
+        "runner_up": "repurchase",
+        "margin": 6,
+        "flags": [
+          "site_bound_equipment",
+          "vendor_no_cloud_support",
+          "licence_restriction"
+        ],
+        "reasons": [
+          "The description points to equipment or response times tied to a physical site (machine control, scanners, label printing or similar). These are usually kept near the site, or moved only after a network and latency test. [R03: rehost -1, retain +4]",
+          "The vendor does not support this application in the cloud. Running it there anyway risks losing vendor support, so the choices are to keep it, replace it, or rebuild it. [R04: rehost -3, replatform -3, refactor +1, repurchase +3, retain +3]",
+          "Business criticality is 5. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "The licence terms (oem) may not allow the software to run on shared cloud hosts. [R22: rehost -2, replatform -2, repurchase +1, retain +2]"
+        ],
+        "actions": [
+          "Measure round-trip latency and loss to the equipment before deciding to move it.",
+          "Get the vendor position in writing and ask what route they offer (hosted, SaaS or a newer version).",
+          "Read the licence with the vendor: some licences tied to hardware or a dongle cannot move."
+        ]
+      },
+      {
+        "app_id": "APP020",
+        "name": "Manufacturing execution system",
+        "owner": "Castings Plant Manager",
+        "business_criticality": 5,
+        "users": 160,
+        "technology": "Packaged application (MES)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001",
+          "APP008",
+          "APP009",
+          "APP019"
+        ],
+        "current_annual_cost": 96000.0,
+        "change_frequency": "medium",
+        "licence_model": "subscription",
+        "notes": "Needs a fast, steady link to the shop floor gateway.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "retain",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 2,
+          "refactor": -6,
+          "repurchase": 0,
+          "retire": -4,
+          "retain": 4
+        },
+        "runner_up": "rehost",
+        "margin": 1,
+        "flags": [
+          "site_bound_equipment",
+          "end_of_support_soon"
+        ],
+        "reasons": [
+          "The description points to equipment or response times tied to a physical site (machine control, scanners, label printing or similar). These are usually kept near the site, or moved only after a network and latency test. [R03: rehost -1, retain +4]",
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Business criticality is 5. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]"
+        ],
+        "actions": [
+          "Measure round-trip latency and loss to the equipment before deciding to move it."
+        ]
+      },
+      {
+        "app_id": "APP021",
+        "name": "Furnace scheduling (legacy)",
+        "owner": "Foundry Manager",
+        "business_criticality": 3,
+        "users": 6,
+        "technology": "Packaged application (vendor no longer trading)",
+        "os_or_platform": "Windows Server 2008 R2",
+        "end_of_support_date": "2020-01-14",
+        "vendor_supported_in_cloud": "no",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP019"
+        ],
+        "current_annual_cost": 6000.0,
+        "change_frequency": "none",
+        "licence_model": "perpetual",
+        "notes": "Vendor has ceased trading. Writes schedule files that the PLC gateway reads.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "past",
+        "dependents_count": 0,
+        "disposition": "retain",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": -2,
+          "replatform": 0,
+          "refactor": -2,
+          "repurchase": 5,
+          "retire": 1,
+          "retain": 5
+        },
+        "runner_up": "repurchase",
+        "margin": 0,
+        "flags": [
+          "tie_broken_by_order",
+          "site_bound_equipment",
+          "vendor_no_cloud_support",
+          "end_of_support_passed"
+        ],
+        "reasons": [
+          "The description points to equipment or response times tied to a physical site (machine control, scanners, label printing or similar). These are usually kept near the site, or moved only after a network and latency test. [R03: rehost -1, retain +4]",
+          "The vendor does not support this application in the cloud. Running it there anyway risks losing vendor support, so the choices are to keep it, replace it, or rebuild it. [R04: rehost -3, replatform -3, refactor +1, repurchase +3, retain +3]",
+          "Support for the operating system or product ended on 2020-01-14. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired. [R08: replatform +3, refactor +1, repurchase +2, retire +1, retain -2]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "Two dispositions scored the same, so the tie was broken by the configured order. Treat retain and repurchase as equally open."
+        ],
+        "actions": [
+          "Measure round-trip latency and loss to the equipment before deciding to move it.",
+          "Get the vendor position in writing and ask what route they offer (hosted, SaaS or a newer version).",
+          "If a stopgap is unavoidable, check Microsoft's current terms for Extended Security Updates and record a dated exit."
+        ]
+      },
+      {
+        "app_id": "APP022",
+        "name": "Quality management",
+        "owner": "Quality Manager",
+        "business_criticality": 3,
+        "users": 70,
+        "technology": "Packaged application (quality management)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001",
+          "APP008"
+        ],
+        "current_annual_cost": 18000.0,
+        "change_frequency": "low",
+        "licence_model": "subscription",
+        "notes": "Vendor offers a SaaS version.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "repurchase",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 2,
+          "refactor": -4,
+          "repurchase": 5,
+          "retire": 0,
+          "retain": 0
+        },
+        "runner_up": "rehost",
+        "margin": 2,
+        "flags": [
+          "end_of_support_soon"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "The notes say a SaaS or hosted version of the product exists, which makes repurchase a real option. [R15: repurchase +4]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP023",
+        "name": "Maintenance management",
+        "owner": "Engineering Manager",
+        "business_criticality": 3,
+        "users": 55,
+        "technology": "Packaged application (maintenance management)",
+        "os_or_platform": "Windows Server 2019",
+        "end_of_support_date": "2029-01-09",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP001",
+          "APP008"
+        ],
+        "current_annual_cost": 15000.0,
+        "change_frequency": "low",
+        "licence_model": "subscription",
+        "notes": "",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "later",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 1,
+          "refactor": -4,
+          "repurchase": 0,
+          "retire": 0,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 2,
+        "flags": [],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP024",
+        "name": "CAD licence server",
+        "owner": "Engineering Manager",
+        "business_criticality": 3,
+        "users": 30,
+        "technology": "Packaged application (CAD licence server)",
+        "os_or_platform": "Windows Server 2019",
+        "end_of_support_date": "2029-01-09",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001"
+        ],
+        "current_annual_cost": 19000.0,
+        "change_frequency": "low",
+        "licence_model": "perpetual, hardware dongle",
+        "notes": "Licences are tied to a hardware key.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "later",
+        "dependents_count": 0,
+        "disposition": "retain",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 1,
+          "replatform": -1,
+          "refactor": -4,
+          "repurchase": 1,
+          "retire": 0,
+          "retain": 2
+        },
+        "runner_up": "rehost",
+        "margin": 1,
+        "flags": [
+          "licence_restriction"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "The licence terms (perpetual, hardware dongle) may not allow the software to run on shared cloud hosts. [R22: rehost -2, replatform -2, repurchase +1, retain +2]"
+        ],
+        "actions": [
+          "Read the licence with the vendor: some licences tied to hardware or a dongle cannot move."
+        ]
+      },
+      {
+        "app_id": "APP025",
+        "name": "Costing database",
+        "owner": "Cost Accountant",
+        "business_criticality": 2,
+        "users": 4,
+        "technology": "Custom application (Access database)",
+        "os_or_platform": "Desktop, Office",
+        "end_of_support_date": "",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "low",
+        "dependencies": [],
+        "current_annual_cost": 1500.0,
+        "change_frequency": "none",
+        "licence_model": "perpetual",
+        "notes": "Runs from a desktop. Built in-house.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "custom",
+        "eos_status": "none",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 1,
+          "refactor": -2,
+          "repurchase": 0,
+          "retire": 2,
+          "retain": 0
+        },
+        "runner_up": "retire",
+        "margin": 2,
+        "flags": [],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Nobody changes it, few people use it and it is not critical. [R12: retire +2]",
+          "Stable in-house code rarely repays the cost of refactoring. Move it first and revisit once it is running in Azure. [R17: rehost +1, refactor -2]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP026",
+        "name": "Warehouse management system",
+        "owner": "Distribution Director",
+        "business_criticality": 5,
+        "users": 210,
+        "technology": "Packaged application (warehouse management)",
+        "os_or_platform": "Windows Server 2019",
+        "end_of_support_date": "2029-01-09",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001",
+          "APP007",
+          "APP008",
+          "APP027"
+        ],
+        "current_annual_cost": 118000.0,
+        "change_frequency": "medium",
+        "licence_model": "subscription",
+        "notes": "Exchanges stock and shipment data with the transport system.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "later",
+        "dependents_count": 5,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 1,
+          "refactor": -7,
+          "repurchase": -2,
+          "retire": -4,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 3,
+        "flags": [],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Business criticality is 5. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "5 other applications depend on it, so a change in behaviour ripples out. Prefer a route that keeps interfaces the same. [R23: refactor -1, repurchase -1]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP027",
+        "name": "Transport management system",
+        "owner": "Distribution Director",
+        "business_criticality": 4,
+        "users": 55,
+        "technology": "Packaged application (transport management)",
+        "os_or_platform": "Windows Server 2019",
+        "end_of_support_date": "2029-01-09",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001",
+          "APP008",
+          "APP026"
+        ],
+        "current_annual_cost": 54000.0,
+        "change_frequency": "medium",
+        "licence_model": "subscription",
+        "notes": "Exchanges stock and shipment data with the warehouse system.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "later",
+        "dependents_count": 2,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 1,
+          "refactor": -6,
+          "repurchase": -1,
+          "retire": -4,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 3,
+        "flags": [],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP028",
+        "name": "Handheld scanner service",
+        "owner": "Distribution Centre Manager",
+        "business_criticality": 4,
+        "users": 180,
+        "technology": "Packaged application (scanner server)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP001",
+          "APP026"
+        ],
+        "current_annual_cost": 12000.0,
+        "change_frequency": "low",
+        "licence_model": "subscription",
+        "notes": "Radio frequency scanners on the warehouse floor.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "retain",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 2,
+          "refactor": -6,
+          "repurchase": 0,
+          "retire": -4,
+          "retain": 4
+        },
+        "runner_up": "rehost",
+        "margin": 1,
+        "flags": [
+          "site_bound_equipment",
+          "end_of_support_soon"
+        ],
+        "reasons": [
+          "The description points to equipment or response times tied to a physical site (machine control, scanners, label printing or similar). These are usually kept near the site, or moved only after a network and latency test. [R03: rehost -1, retain +4]",
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]"
+        ],
+        "actions": [
+          "Measure round-trip latency and loss to the equipment before deciding to move it."
+        ]
+      },
+      {
+        "app_id": "APP029",
+        "name": "Carrier label printing",
+        "owner": "Distribution Centre Manager",
+        "business_criticality": 3,
+        "users": 60,
+        "technology": "Packaged application (label printing service)",
+        "os_or_platform": "Windows Server 2012 R2",
+        "end_of_support_date": "2023-10-10",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP026"
+        ],
+        "current_annual_cost": 8000.0,
+        "change_frequency": "low",
+        "licence_model": "perpetual",
+        "notes": "Drives label printers at the dispatch bays.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "past",
+        "dependents_count": 0,
+        "disposition": "replatform",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 2,
+          "replatform": 4,
+          "refactor": -3,
+          "repurchase": 2,
+          "retire": 1,
+          "retain": 2
+        },
+        "runner_up": "rehost",
+        "margin": 2,
+        "flags": [
+          "site_bound_equipment",
+          "end_of_support_passed"
+        ],
+        "reasons": [
+          "The description points to equipment or response times tied to a physical site (machine control, scanners, label printing or similar). These are usually kept near the site, or moved only after a network and latency test. [R03: rehost -1, retain +4]",
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support for the operating system or product ended on 2023-10-10. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired. [R08: replatform +3, refactor +1, repurchase +2, retire +1, retain -2]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]"
+        ],
+        "actions": [
+          "Measure round-trip latency and loss to the equipment before deciding to move it.",
+          "If a stopgap is unavoidable, check Microsoft's current terms for Extended Security Updates and record a dated exit."
+        ]
+      },
+      {
+        "app_id": "APP030",
+        "name": "Customer portal and order entry",
+        "owner": "Sales Director",
+        "business_criticality": 3,
+        "users": 900,
+        "technology": "Custom application (.NET)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001",
+          "APP008",
+          "APP026",
+          "APP032"
+        ],
+        "current_annual_cost": 46000.0,
+        "change_frequency": "high",
+        "licence_model": "in-house",
+        "notes": "Customers place and track orders. Changed most months. Single monolith that struggles at peak order times.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "custom",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "refactor",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 5,
+          "refactor": 6,
+          "repurchase": 1,
+          "retire": 0,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 1,
+        "flags": [
+          "end_of_support_soon"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "In-house code that changes often gains from modernisation, and the team is already working in it. Moving to a managed platform is the usual first step. [R16: replatform +3, refactor +2]",
+          "The notes describe limits in how the in-house application is built (for example scaling or accumulated technical debt), which is what refactoring addresses. [R24: refactor +4]"
+        ],
+        "actions": [
+          "Confirm the problem with the owner and size the refactor separately. Avoid doing it during the move itself."
+        ]
+      },
+      {
+        "app_id": "APP031",
+        "name": "Supplier portal",
+        "owner": "Procurement Manager",
+        "business_criticality": 2,
+        "users": 120,
+        "technology": "Custom application (.NET)",
+        "os_or_platform": "Windows Server 2012 R2",
+        "end_of_support_date": "2023-10-10",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP001",
+          "APP008"
+        ],
+        "current_annual_cost": 12000.0,
+        "change_frequency": "medium",
+        "licence_model": "in-house",
+        "notes": "",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "custom",
+        "eos_status": "past",
+        "dependents_count": 0,
+        "disposition": "replatform",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 4,
+          "refactor": 1,
+          "repurchase": 2,
+          "retire": 1,
+          "retain": -2
+        },
+        "runner_up": "rehost",
+        "margin": 1,
+        "flags": [
+          "end_of_support_passed"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support for the operating system or product ended on 2023-10-10. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired. [R08: replatform +3, refactor +1, repurchase +2, retire +1, retain -2]"
+        ],
+        "actions": [
+          "If a stopgap is unavoidable, check Microsoft's current terms for Extended Security Updates and record a dated exit."
+        ]
+      },
+      {
+        "app_id": "APP032",
+        "name": "Pricing engine",
+        "owner": "Commercial Director",
+        "business_criticality": 4,
+        "users": 35,
+        "technology": "Custom application (.NET)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP033"
+        ],
+        "current_annual_cost": 22000.0,
+        "change_frequency": "medium",
+        "licence_model": "in-house",
+        "notes": "Calls contracts for rebate terms.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "custom",
+        "eos_status": "soon",
+        "dependents_count": 2,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 2,
+          "refactor": -2,
+          "repurchase": 0,
+          "retire": -4,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 2,
+        "flags": [
+          "end_of_support_soon"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP033",
+        "name": "Contracts and rebates",
+        "owner": "Commercial Director",
+        "business_criticality": 3,
+        "users": 25,
+        "technology": "Custom application (.NET)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP008",
+          "APP034"
+        ],
+        "current_annual_cost": 17000.0,
+        "change_frequency": "low",
+        "licence_model": "in-house",
+        "notes": "Looks up customer details.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "custom",
+        "eos_status": "soon",
+        "dependents_count": 1,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 2,
+          "refactor": -2,
+          "repurchase": 1,
+          "retire": 0,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 2,
+        "flags": [
+          "end_of_support_soon"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Stable in-house code rarely repays the cost of refactoring. Move it first and revisit once it is running in Azure. [R17: rehost +1, refactor -2]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP034",
+        "name": "Customer master data service",
+        "owner": "Sales Operations Manager",
+        "business_criticality": 4,
+        "users": 300,
+        "technology": "Custom application (.NET)",
+        "os_or_platform": "Windows Server 2019",
+        "end_of_support_date": "2029-01-09",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "high",
+        "dependencies": [
+          "APP008",
+          "APP032"
+        ],
+        "current_annual_cost": 26000.0,
+        "change_frequency": "medium",
+        "licence_model": "in-house",
+        "notes": "Reads customer price lists from the pricing engine.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "custom",
+        "eos_status": "later",
+        "dependents_count": 1,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 1,
+          "refactor": -2,
+          "repurchase": -1,
+          "retire": -4,
+          "retain": 1
+        },
+        "runner_up": "replatform",
+        "margin": 3,
+        "flags": [
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Data sensitivity is high. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]"
+        ],
+        "actions": [
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP035",
+        "name": "Demand planning",
+        "owner": "Supply Chain Director",
+        "business_criticality": 3,
+        "users": 22,
+        "technology": "Packaged application (demand planning)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "unknown",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP008",
+          "APP036"
+        ],
+        "current_annual_cost": 33000.0,
+        "change_frequency": "medium",
+        "licence_model": "subscription",
+        "notes": "Vendor not yet asked about Azure support.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 1,
+          "replatform": 0,
+          "refactor": -4,
+          "repurchase": 1,
+          "retire": 0,
+          "retain": 1
+        },
+        "runner_up": "retain",
+        "margin": 0,
+        "flags": [
+          "tie_broken_by_order",
+          "vendor_support_unknown",
+          "end_of_support_soon"
+        ],
+        "reasons": [
+          "Vendor support in the cloud has not been confirmed. The score is held back until it is, because moving an application on an assumption is how migrations fail. [R05: rehost -1, replatform -1, retain +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "Two dispositions scored the same, so the tie was broken by the configured order. Treat rehost and retain as equally open."
+        ],
+        "actions": [
+          "Ask the vendor in writing whether the product is supported on Azure, on which versions, and under what licence terms."
+        ]
+      },
+      {
+        "app_id": "APP036",
+        "name": "Business intelligence and reporting",
+        "owner": "Group IT Operations",
+        "business_criticality": 3,
+        "users": 140,
+        "technology": "Database (data warehouse)",
+        "os_or_platform": "SQL Server 2019",
+        "end_of_support_date": "2030-01-08",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "high",
+        "dependencies": [
+          "APP001",
+          "APP008",
+          "APP009",
+          "APP026",
+          "APP027"
+        ],
+        "current_annual_cost": 58000.0,
+        "change_frequency": "high",
+        "licence_model": "per-core",
+        "notes": "Nightly loads from ERP, warehouse and transport.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "database",
+        "eos_status": "later",
+        "dependents_count": 1,
+        "disposition": "replatform",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 4,
+          "refactor": -4,
+          "repurchase": 0,
+          "retire": 0,
+          "retain": 1
+        },
+        "runner_up": "rehost",
+        "margin": 1,
+        "flags": [
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "A database often benefits from a managed service, which removes patching and backup work. Check engine version and feature compatibility first. [R18: replatform +3]",
+          "Data sensitivity is high. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]"
+        ],
+        "actions": [
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP037",
+        "name": "Credit control",
+        "owner": "Finance Director",
+        "business_criticality": 3,
+        "users": 12,
+        "technology": "Packaged application (credit control)",
+        "os_or_platform": "Windows Server 2012 R2",
+        "end_of_support_date": "2023-10-10",
+        "vendor_supported_in_cloud": "unknown",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP001",
+          "APP008"
+        ],
+        "current_annual_cost": 14000.0,
+        "change_frequency": "low",
+        "licence_model": "perpetual",
+        "notes": "Vendor contact left. Support terms not on file.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "past",
+        "dependents_count": 0,
+        "disposition": "replatform",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 1,
+          "replatform": 2,
+          "refactor": -3,
+          "repurchase": 2,
+          "retire": 1,
+          "retain": -1
+        },
+        "runner_up": "repurchase",
+        "margin": 0,
+        "flags": [
+          "tie_broken_by_order",
+          "vendor_support_unknown",
+          "end_of_support_passed"
+        ],
+        "reasons": [
+          "Vendor support in the cloud has not been confirmed. The score is held back until it is, because moving an application on an assumption is how migrations fail. [R05: rehost -1, replatform -1, retain +1]",
+          "Support for the operating system or product ended on 2023-10-10. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired. [R08: replatform +3, refactor +1, repurchase +2, retire +1, retain -2]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "Two dispositions scored the same, so the tie was broken by the configured order. Treat replatform and repurchase as equally open."
+        ],
+        "actions": [
+          "Ask the vendor in writing whether the product is supported on Azure, on which versions, and under what licence terms.",
+          "If a stopgap is unavoidable, check Microsoft's current terms for Extended Security Updates and record a dated exit."
+        ]
+      },
+      {
+        "app_id": "APP038",
+        "name": "Time and attendance",
+        "owner": "HR Director",
+        "business_criticality": 3,
+        "users": 1100,
+        "technology": "Packaged application (time clock terminals)",
+        "os_or_platform": "Windows Server 2016",
+        "end_of_support_date": "2027-01-12",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "restricted",
+        "dependencies": [
+          "APP001",
+          "APP012"
+        ],
+        "current_annual_cost": 17000.0,
+        "change_frequency": "low",
+        "licence_model": "subscription",
+        "notes": "Clocking terminals at every site.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "package",
+        "eos_status": "soon",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "low",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 2,
+          "refactor": -4,
+          "repurchase": 1,
+          "retire": 0,
+          "retain": 1
+        },
+        "runner_up": "replatform",
+        "margin": 1,
+        "flags": [
+          "end_of_support_soon",
+          "data_protection_review"
+        ],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Support ends on 2027-01-12, within the next 12 months. Plan the remediation as part of the move rather than after it. [R09: replatform +1, repurchase +1]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "Data sensitivity is restricted. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]"
+        ],
+        "actions": [
+          "Complete a data protection review and confirm region, residency and access controls before cutover."
+        ]
+      },
+      {
+        "app_id": "APP039",
+        "name": "Old intranet",
+        "owner": "Communications Manager",
+        "business_criticality": 1,
+        "users": 0,
+        "technology": "Custom application (intranet)",
+        "os_or_platform": "Windows Server 2008 R2",
+        "end_of_support_date": "2020-01-14",
+        "vendor_supported_in_cloud": "no",
+        "data_sensitivity": "low",
+        "dependencies": [
+          "APP001"
+        ],
+        "current_annual_cost": 4500.0,
+        "change_frequency": "none",
+        "licence_model": "in-house",
+        "notes": "Replaced by the Microsoft 365 intranet. Still online but unused.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "custom",
+        "eos_status": "past",
+        "dependents_count": 0,
+        "disposition": "retire",
+        "in_scope": true,
+        "confidence": "high",
+        "needs_review": true,
+        "overridden": false,
+        "scores": {
+          "rehost": 0,
+          "replatform": 0,
+          "refactor": 0,
+          "repurchase": 5,
+          "retire": 12,
+          "retain": 1
+        },
+        "runner_up": "repurchase",
+        "margin": 7,
+        "flags": [],
+        "reasons": [
+          "The vendor does not support this application in the cloud. Running it there anyway risks losing vendor support, so the choices are to keep it, replace it, or rebuild it. [R04: rehost -3, replatform -3, refactor +1, repurchase +3, retain +3]",
+          "Support for the operating system or product ended on 2020-01-14. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired. [R08: replatform +3, refactor +1, repurchase +2, retire +1, retain -2]",
+          "Only 0 user(s) and business criticality 1. Low use and low criticality make this a retirement candidate. [R10: retire +5]",
+          "The notes suggest the application is duplicated, superseded or no longer used. [R11: retire +4]",
+          "Nobody changes it, few people use it and it is not critical. [R12: retire +2]",
+          "Stable in-house code rarely repays the cost of refactoring. Move it first and revisit once it is running in Azure. [R17: rehost +1, refactor -2]"
+        ],
+        "actions": [
+          "Confirm with the owner that nobody needs the function, and agree what happens to the data (archive or delete).",
+          "Confirm with the owner and check for hidden dependants before retiring."
+        ]
+      },
+      {
+        "app_id": "APP040",
+        "name": "Customer relationship management",
+        "owner": "Sales Director",
+        "business_criticality": 4,
+        "users": 140,
+        "technology": "SaaS (CRM)",
+        "os_or_platform": "Vendor hosted",
+        "end_of_support_date": "",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "medium",
+        "dependencies": [
+          "APP008"
+        ],
+        "current_annual_cost": 72000.0,
+        "change_frequency": "low",
+        "licence_model": "saas",
+        "notes": "Order and account data feeds from the ERP.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "saas",
+        "eos_status": "none",
+        "dependents_count": 0,
+        "disposition": "retain",
+        "in_scope": false,
+        "confidence": "high",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 1,
+          "refactor": -6,
+          "repurchase": -1,
+          "retire": -4,
+          "retain": 0
+        },
+        "runner_up": "",
+        "margin": null,
+        "flags": [],
+        "reasons": [
+          "Already delivered as SaaS, so there is nothing to migrate. It is left out of the waves and out of the cost comparison. Check that its integrations still work after the apps around it move. [R01: decides: retain]",
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Business criticality is 4. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP041",
+        "name": "Email and collaboration",
+        "owner": "Group IT Operations",
+        "business_criticality": 5,
+        "users": 1450,
+        "technology": "SaaS (Microsoft 365)",
+        "os_or_platform": "Vendor hosted",
+        "end_of_support_date": "",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "high",
+        "dependencies": [],
+        "current_annual_cost": 168000.0,
+        "change_frequency": "low",
+        "licence_model": "saas",
+        "notes": "",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "saas",
+        "eos_status": "none",
+        "dependents_count": 0,
+        "disposition": "retain",
+        "in_scope": false,
+        "confidence": "high",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 4,
+          "replatform": 1,
+          "refactor": -6,
+          "repurchase": -1,
+          "retire": -4,
+          "retain": 1
+        },
+        "runner_up": "",
+        "margin": null,
+        "flags": [],
+        "reasons": [
+          "Already delivered as SaaS, so there is nothing to migrate. It is left out of the waves and out of the cost comparison. Check that its integrations still work after the apps around it move. [R01: decides: retain]",
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]",
+          "Business criticality is 5. A critical application favours the route with the least change, and it is not a retirement candidate. [R13: rehost +1, refactor -2, repurchase -1, retire -4]",
+          "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code. [R14: refactor -4]",
+          "Data sensitivity is high. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first. [R21: retain +1]"
+        ],
+        "actions": []
+      },
+      {
+        "app_id": "APP042",
+        "name": "Public website",
+        "owner": "Marketing Manager",
+        "business_criticality": 2,
+        "users": 25,
+        "technology": "Custom application (content management website)",
+        "os_or_platform": "Linux",
+        "end_of_support_date": "",
+        "vendor_supported_in_cloud": "yes",
+        "data_sensitivity": "low",
+        "dependencies": [],
+        "current_annual_cost": 9000.0,
+        "change_frequency": "medium",
+        "licence_model": "open source",
+        "notes": "Editors only. Public pages are read only.",
+        "azure_annual_cost_estimate": null,
+        "tech_class": "custom",
+        "eos_status": "none",
+        "dependents_count": 0,
+        "disposition": "rehost",
+        "in_scope": true,
+        "confidence": "medium",
+        "needs_review": false,
+        "overridden": false,
+        "scores": {
+          "rehost": 3,
+          "replatform": 1,
+          "refactor": 0,
+          "repurchase": 0,
+          "retire": 0,
+          "retain": 0
+        },
+        "runner_up": "replatform",
+        "margin": 2,
+        "flags": [],
+        "reasons": [
+          "Supported in the cloud, which keeps the lower-change routes open. [R07: rehost +1, replatform +1]"
+        ],
+        "actions": []
+      }
+    ]
+  },
+  "waves": {
+    "tool": "migration_planner",
+    "version": "0.1.0",
+    "kind": "waves",
+    "inputs": {
+      "inventory_file": "inventory.csv",
+      "inventory_sha256": "3e8cc0d5c4c427630156915c5a9339d41f0494343d2521e5339a469ed626738e",
+      "overrides_file": null,
+      "overrides_sha256": null,
+      "rules_sha256": "514b5efec22c1204422eac25e2f58a5b79032dfe3512f3a1c39c8af31e769734",
+      "as_of": "2026-11-11"
+    },
+    "settings": {
+      "max_wave_size": 8,
+      "critical_min_criticality": 4,
+      "critical_min_wave": 2,
+      "shared_service_min_dependents": 3,
+      "shared_service_classes": [
+        "platform_service"
+      ],
+      "min_wave_by_disposition": {
+        "refactor": 2,
+        "repurchase": 2
+      },
+      "allow_dependency_in_same_wave": false
+    },
+    "wave_count": 8,
+    "waves": [
+      {
+        "wave": 1,
+        "size": 3,
+        "apps": [
+          "APP010",
+          "APP025",
+          "APP042"
+        ],
+        "by_disposition": {
+          "rehost": 3
+        },
+        "max_criticality": 2,
+        "shared_services": [],
+        "cycle_groups": [],
+        "cross_boundary_links_after_wave": 0
+      },
+      {
+        "wave": 2,
+        "size": 1,
+        "apps": [
+          "APP001"
+        ],
+        "by_disposition": {
+          "rehost": 1
+        },
+        "max_criticality": 5,
+        "shared_services": [
+          "APP001"
+        ],
+        "cycle_groups": [],
+        "cross_boundary_links_after_wave": 25
+      },
+      {
+        "wave": 3,
+        "size": 8,
+        "apps": [
+          "APP002",
+          "APP003",
+          "APP004",
+          "APP006",
+          "APP009",
+          "APP016",
+          "APP017",
+          "APP038"
+        ],
+        "by_disposition": {
+          "rehost": 4,
+          "replatform": 4
+        },
+        "max_criticality": 5,
+        "shared_services": [
+          "APP002",
+          "APP003",
+          "APP004",
+          "APP006",
+          "APP009"
+        ],
+        "cycle_groups": [],
+        "cross_boundary_links_after_wave": 24
+      },
+      {
+        "wave": 4,
+        "size": 3,
+        "apps": [
+          "APP005",
+          "APP007",
+          "APP015"
+        ],
+        "by_disposition": {
+          "rehost": 2,
+          "replatform": 1
+        },
+        "max_criticality": 4,
+        "shared_services": [
+          "APP005",
+          "APP007"
+        ],
+        "cycle_groups": [],
+        "cross_boundary_links_after_wave": 22
+      },
+      {
+        "wave": 5,
+        "size": 2,
+        "apps": [
+          "APP008",
+          "APP018"
+        ],
+        "by_disposition": {
+          "rehost": 2
+        },
+        "max_criticality": 5,
+        "shared_services": [
+          "APP008"
+        ],
+        "cycle_groups": [],
+        "cross_boundary_links_after_wave": 31
+      },
+      {
+        "wave": 6,
+        "size": 8,
+        "apps": [
+          "APP022",
+          "APP023",
+          "APP026",
+          "APP027",
+          "APP031",
+          "APP032",
+          "APP033",
+          "APP034"
+        ],
+        "by_disposition": {
+          "rehost": 6,
+          "replatform": 1,
+          "repurchase": 1
+        },
+        "max_criticality": 5,
+        "shared_services": [
+          "APP026",
+          "APP027"
+        ],
+        "cycle_groups": [
+          "CYC-1",
+          "CYC-2"
+        ],
+        "cross_boundary_links_after_wave": 24
+      },
+      {
+        "wave": 7,
+        "size": 6,
+        "apps": [
+          "APP011",
+          "APP013",
+          "APP029",
+          "APP030",
+          "APP036",
+          "APP037"
+        ],
+        "by_disposition": {
+          "rehost": 2,
+          "replatform": 3,
+          "refactor": 1
+        },
+        "max_criticality": 5,
+        "shared_services": [],
+        "cycle_groups": [],
+        "cross_boundary_links_after_wave": 9
+      },
+      {
+        "wave": 8,
+        "size": 1,
+        "apps": [
+          "APP035"
+        ],
+        "by_disposition": {
+          "rehost": 1
+        },
+        "max_criticality": 3,
+        "shared_services": [],
+        "cycle_groups": [],
+        "cross_boundary_links_after_wave": 7
+      }
+    ],
+    "placement": {
+      "APP001": {
+        "wave": 2,
+        "cycle_group": "",
+        "shared_service": true
+      },
+      "APP002": {
+        "wave": 3,
+        "cycle_group": "",
+        "shared_service": true
+      },
+      "APP003": {
+        "wave": 3,
+        "cycle_group": "",
+        "shared_service": true
+      },
+      "APP004": {
+        "wave": 3,
+        "cycle_group": "",
+        "shared_service": true
+      },
+      "APP005": {
+        "wave": 4,
+        "cycle_group": "",
+        "shared_service": true
+      },
+      "APP006": {
+        "wave": 3,
+        "cycle_group": "",
+        "shared_service": true
+      },
+      "APP007": {
+        "wave": 4,
+        "cycle_group": "",
+        "shared_service": true
+      },
+      "APP008": {
+        "wave": 5,
+        "cycle_group": "",
+        "shared_service": true
+      },
+      "APP009": {
+        "wave": 3,
+        "cycle_group": "",
+        "shared_service": true
+      },
+      "APP010": {
+        "wave": 1,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP011": {
+        "wave": 7,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP013": {
+        "wave": 7,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP015": {
+        "wave": 4,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP016": {
+        "wave": 3,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP017": {
+        "wave": 3,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP018": {
+        "wave": 5,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP022": {
+        "wave": 6,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP023": {
+        "wave": 6,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP025": {
+        "wave": 1,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP026": {
+        "wave": 6,
+        "cycle_group": "CYC-1",
+        "shared_service": true
+      },
+      "APP027": {
+        "wave": 6,
+        "cycle_group": "CYC-1",
+        "shared_service": true
+      },
+      "APP029": {
+        "wave": 7,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP030": {
+        "wave": 7,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP031": {
+        "wave": 6,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP032": {
+        "wave": 6,
+        "cycle_group": "CYC-2",
+        "shared_service": false
+      },
+      "APP033": {
+        "wave": 6,
+        "cycle_group": "CYC-2",
+        "shared_service": false
+      },
+      "APP034": {
+        "wave": 6,
+        "cycle_group": "CYC-2",
+        "shared_service": false
+      },
+      "APP035": {
+        "wave": 8,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP036": {
+        "wave": 7,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP037": {
+        "wave": 7,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP038": {
+        "wave": 3,
+        "cycle_group": "",
+        "shared_service": false
+      },
+      "APP042": {
+        "wave": 1,
+        "cycle_group": "",
+        "shared_service": false
+      }
+    },
+    "cycles": [
+      {
+        "group": "CYC-1",
+        "apps": [
+          "APP026",
+          "APP027"
+        ],
+        "example_loop": [
+          "APP026",
+          "APP027",
+          "APP026"
+        ]
+      },
+      {
+        "group": "CYC-2",
+        "apps": [
+          "APP032",
+          "APP033",
+          "APP034"
+        ],
+        "example_loop": [
+          "APP032",
+          "APP033",
+          "APP034",
+          "APP032"
+        ]
+      }
+    ],
+    "not_scheduled": {
+      "APP012": "not in scope (already SaaS or otherwise unchanged)",
+      "APP014": "retire (decommission task, not a migration)",
+      "APP019": "retained on premises",
+      "APP020": "retained on premises",
+      "APP021": "retained on premises",
+      "APP024": "retained on premises",
+      "APP028": "retained on premises",
+      "APP039": "retire (decommission task, not a migration)",
+      "APP040": "not in scope (already SaaS or otherwise unchanged)",
+      "APP041": "not in scope (already SaaS or otherwise unchanged)"
+    },
+    "warnings": [
+      "Circular dependency CYC-1: APP026 -> APP027 -> APP026. These 2 applications are scheduled together in one wave and must be cut over together. Check whether every link is a real runtime dependency: a reporting feed or file extract can often be treated as loosely coupled, which would let them move separately.",
+      "Circular dependency CYC-2: APP032 -> APP033 -> APP034 -> APP032. These 3 applications are scheduled together in one wave and must be cut over together. Check whether every link is a real runtime dependency: a reporting feed or file extract can often be treated as loosely coupled, which would let them move separately.",
+      "APP019 stays on premises but depends on APP001 (wave 2). Once those move it calls into Azure across the hybrid connection: test latency and bandwidth.",
+      "APP020 stays on premises but depends on APP001 (wave 2), APP008 (wave 5), APP009 (wave 3). Once those move it calls into Azure across the hybrid connection: test latency and bandwidth.",
+      "APP024 stays on premises but depends on APP001 (wave 2). Once those move it calls into Azure across the hybrid connection: test latency and bandwidth.",
+      "APP028 stays on premises but depends on APP001 (wave 2), APP026 (wave 6). Once those move it calls into Azure across the hybrid connection: test latency and bandwidth."
+    ]
+  },
+  "cost": {
+    "tool": "migration_planner",
+    "version": "0.1.0",
+    "kind": "cost",
+    "inputs": {
+      "inventory_file": "inventory.csv",
+      "inventory_sha256": "3e8cc0d5c4c427630156915c5a9339d41f0494343d2521e5339a469ed626738e",
+      "overrides_file": null,
+      "overrides_sha256": null,
+      "rules_sha256": "514b5efec22c1204422eac25e2f58a5b79032dfe3512f3a1c39c8af31e769734",
+      "as_of": "2026-11-11",
+      "assumptions_sha256": "2ee84e2c9f4b71194eda8e48645fc33391242bb68c2dd5acc22411d51a653339"
+    },
+    "currency": "GBP",
+    "horizon_years": 3,
+    "illustrative": true,
+    "label": "ILLUSTRATIVE ASSUMPTIONS for the fictional Wexcombe estate. These are invented placeholder numbers, not real prices or quotes.",
+    "discount_rate": 0.05,
+    "stay": {
+      "total": 5766030.4,
+      "final_year_run_cost": 1859270.4,
+      "npv": 5344065.1,
+      "by_year": [
+        1719000.0,
+        2187760.0,
+        1859270.4
+      ],
+      "by_category": {
+        "on_prem_run": 5366030.4,
+        "azure_run": 0.0,
+        "platform_run": 0.0,
+        "other_recurring": 0.0,
+        "migration_one_off": 0.0,
+        "platform_one_off": 0.0,
+        "other_one_off": 0.0,
+        "hardware_refresh": 400000.0
+      }
+    },
+    "plan": {
+      "total": 6300290.52,
+      "final_year_run_cost": 1797438.87,
+      "npv": 5874174.73,
+      "by_year": [
+        2251478.22,
+        2251373.43,
+        1797438.87
+      ],
+      "by_category": {
+        "on_prem_run": 3148987.5,
+        "azure_run": 1988015.47,
+        "platform_run": 269798.4,
+        "other_recurring": 37500.0,
+        "migration_one_off": 387952.5,
+        "platform_one_off": 300000.0,
+        "other_one_off": 25000.0,
+        "hardware_refresh": 143036.65
+      }
+    },
+    "saving": -534260.12,
+    "saving_pct": -9.3,
+    "break_even_month": null,
+    "break_even_month_discounted": null,
+    "timing": {
+      "landing_zone_months": 3,
+      "months_per_wave": 2.0,
+      "parallel_run_months": 1,
+      "last_cutover_month": 19,
+      "programme_end_month": 19,
+      "retire_window": [
+        4,
+        5
+      ],
+      "wave_windows": {
+        "1": [
+          4,
+          5
+        ],
+        "2": [
+          6,
+          7
+        ],
+        "3": [
+          8,
+          9
+        ],
+        "4": [
+          10,
+          11
+        ],
+        "5": [
+          12,
+          13
+        ],
+        "6": [
+          14,
+          15
+        ],
+        "7": [
+          16,
+          17
+        ],
+        "8": [
+          18,
+          19
+        ]
+      }
+    },
+    "counts": {
+      "migrating": 32,
+      "retiring": 2,
+      "unchanged": 8
+    },
+    "azure_cost_methods": {
+      "archive": 2,
+      "factor": 32
+    },
+    "sensitivity": [
+      {
+        "case": "Current on premises run cost",
+        "direction": "adverse (-20%)",
+        "stay_total": 4692824.32,
+        "migrate_total": 5670493.02,
+        "saving": -977668.7,
+        "saving_change_vs_base": -443408.58,
+        "break_even_month": null
+      },
+      {
+        "case": "Current on premises run cost",
+        "direction": "favourable (+20%)",
+        "stay_total": 6839236.48,
+        "migrate_total": 6930088.02,
+        "saving": -90851.54,
+        "saving_change_vs_base": 443408.58,
+        "break_even_month": null
+      },
+      {
+        "case": "Azure run cost",
+        "direction": "adverse (+20%)",
+        "stay_total": 5766030.4,
+        "migrate_total": 6697893.61,
+        "saving": -931863.21,
+        "saving_change_vs_base": -397603.09,
+        "break_even_month": null
+      },
+      {
+        "case": "Azure run cost",
+        "direction": "favourable (-20%)",
+        "stay_total": 5766030.4,
+        "migrate_total": 5902687.43,
+        "saving": -136657.03,
+        "saving_change_vs_base": 397603.09,
+        "break_even_month": null
+      },
+      {
+        "case": "Migration effort",
+        "direction": "adverse (+20%)",
+        "stay_total": 5766030.4,
+        "migrate_total": 6377881.02,
+        "saving": -611850.62,
+        "saving_change_vs_base": -77590.5,
+        "break_even_month": null
+      },
+      {
+        "case": "Migration effort",
+        "direction": "favourable (-20%)",
+        "stay_total": 5766030.4,
+        "migrate_total": 6222700.02,
+        "saving": -456669.62,
+        "saving_change_vs_base": 77590.5,
+        "break_even_month": null
+      },
+      {
+        "case": "Share of on premises cost actually removed",
+        "direction": "adverse (-20%)",
+        "stay_total": 5766030.4,
+        "migrate_total": 6795091.77,
+        "saving": -1029061.37,
+        "saving_change_vs_base": -494801.25,
+        "break_even_month": null
+      },
+      {
+        "case": "Share of on premises cost actually removed",
+        "direction": "favourable (+20%)",
+        "stay_total": 5766030.4,
+        "migrate_total": 6025400.94,
+        "saving": -259370.54,
+        "saving_change_vs_base": 274889.58,
+        "break_even_month": null
+      },
+      {
+        "case": "Months per wave (programme speed)",
+        "direction": "adverse (+20%)",
+        "stay_total": 5766030.4,
+        "migrate_total": 6365566.11,
+        "saving": -599535.71,
+        "saving_change_vs_base": -65275.59,
+        "break_even_month": null
+      },
+      {
+        "case": "Months per wave (programme speed)",
+        "direction": "favourable (-20%)",
+        "stay_total": 5766030.4,
+        "migrate_total": 6270493.61,
+        "saving": -504463.21,
+        "saving_change_vs_base": 29796.91,
+        "break_even_month": null
+      },
+      {
+        "case": "Landing zone and connectivity running cost",
+        "direction": "adverse (+20%)",
+        "stay_total": 5766030.4,
+        "migrate_total": 6354250.2,
+        "saving": -588219.8,
+        "saving_change_vs_base": -53959.68,
+        "break_even_month": null
+      },
+      {
+        "case": "Landing zone and connectivity running cost",
+        "direction": "favourable (-20%)",
+        "stay_total": 5766030.4,
+        "migrate_total": 6246330.84,
+        "saving": -480300.44,
+        "saving_change_vs_base": 53959.68,
+        "break_even_month": null
+      },
+      {
+        "case": "All of the above together",
+        "direction": "all adverse",
+        "stay_total": 4692824.32,
+        "migrate_total": 6563221.94,
+        "saving": -1870397.62,
+        "saving_change_vs_base": -1336137.5,
+        "break_even_month": null
+      },
+      {
+        "case": "All of the above together",
+        "direction": "all favourable",
+        "stay_total": 6839236.48,
+        "migrate_total": 5952109.93,
+        "saving": 887126.55,
+        "saving_change_vs_base": 1421386.67,
+        "break_even_month": 21
+      }
+    ],
+    "warnings": [
+      "These assumptions are marked illustrative. The figures are not real prices and must not be used for a decision.",
+      "2 application(s) are planned to move although vendor support in the cloud is not confirmed (APP035, APP037). Their cost is modelled as if the move succeeds as planned.",
+      "5 retained application(s) stay on premises and cost the same in both scenarios. Any saving depends on the shared costs behind them (hosting, hardware, licences) actually shrinking.",
+      "Repurchased applications use the run cost factor because no saas_per_user_per_year was supplied.",
+      "The migration scenario does not break even within 3 years on these assumptions."
+    ],
+    "not_modelled": [
+      "Data egress and data transfer charges, including moving data into Azure and traffic between Azure and the remaining on premises estate.",
+      "Licensing changes: whether existing licences can be reused (for example through Azure Hybrid Benefit), vendor uplifts for cloud use, true-ups, and the cost of any licences that become unnecessary.",
+      "Skills, training, hiring and any change in the size or cost of the IT team. People cost is only included where it is inside the supplied unit costs.",
+      "Network: new or upgraded circuits, internet breakout and bandwidth needed for hybrid running, beyond the single connectivity figure supplied.",
+      "Commitment discounts (reservations, savings plans), support plans and enterprise agreement terms, unless already reflected in the run cost factors you supplied.",
+      "Right-sizing, growth, seasonality and performance. Azure run cost follows the factors supplied, not a measured sizing.",
+      "Backup, disaster recovery and security tooling differences between today and Azure, unless included in the factors or in 'other_costs'.",
+      "Exit costs on existing contracts, early termination fees, data centre or lease exit, and one-off write-offs of assets.",
+      "Business disruption, downtime, lost productivity and the cost of delay or failure.",
+      "Tax, VAT, foreign exchange and the accounting treatment of capital and operating spend."
+    ]
+  }
+}

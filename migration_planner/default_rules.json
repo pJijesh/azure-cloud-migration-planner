@@ -1,0 +1,265 @@
+{
+  "version": 1,
+  "description": "Default disposition rules. Each rule adds or subtracts points for one or more of the six dispositions. The highest total wins. Copy this file (python -m migration_planner show-rules > rules.json), edit it, and pass it with --rules.",
+  "settings": {
+    "eos_soon_months": 12,
+    "confidence_high_margin": 4,
+    "confidence_medium_margin": 2,
+    "tie_break_order": ["rehost", "replatform", "retain", "repurchase", "refactor", "retire"],
+    "default_as_of": null
+  },
+  "baseline": {
+    "rehost": 2,
+    "replatform": 0,
+    "refactor": 0,
+    "repurchase": 0,
+    "retire": 0,
+    "retain": 0
+  },
+  "keywords": {
+    "blocked_platform_keywords": ["mainframe", "as/400", "as400", "ibm i", "hp-ux", "solaris", "openvms", "tru64", "aix"],
+    "latency_or_hardware_keywords": ["plc", "scada", "shop floor", "shop-floor", "production line", "radio frequency", "serial port", "label printer"],
+    "retire_note_keywords": ["decommission", "duplicate", "superseded", "replaced by", "no longer used", "redundant", "unused"],
+    "repurchase_note_keywords": ["saas version", "vendor saas", "saas equivalent", "vendor offers saas", "hosted version"],
+    "refactor_note_keywords": ["monolith", "does not scale", "cannot scale", "struggles at peak", "re-architect", "rearchitect", "rewrite", "technical debt"],
+    "restrictive_licence_keywords": ["oem", "hardware-locked", "hardware locked", "dongle", "cpu-locked", "on-premises only", "on premises only"]
+  },
+  "tech_classes": [
+    {"class": "saas", "keywords": ["saas", "software as a service", "vendor hosted", "vendor-hosted", "microsoft 365"]},
+    {"class": "platform_service", "keywords": ["platform service", "directory service", "active directory", "dns", "dhcp", "certificate", "print server", "monitoring", "backup", "sftp", "edi gateway", "smtp", "message broker"]},
+    {"class": "file_service", "keywords": ["file service", "file server", "file share", "nas"]},
+    {"class": "custom", "keywords": ["custom", "bespoke", "in-house", "inhouse"]},
+    {"class": "package", "keywords": ["package", "packaged", "cots", "commercial", "erp"]},
+    {"class": "database", "keywords": ["database", "sql server", "oracle", "postgres", "mysql", "data warehouse"]}
+  ],
+  "default_tech_class": "other",
+  "rules": [
+    {
+      "id": "R01",
+      "name": "already_saas",
+      "when": {"field": "tech_class", "op": "eq", "value": "saas"},
+      "force": {"disposition": "retain", "in_scope": false},
+      "reason": "Already delivered as SaaS, so there is nothing to migrate. It is left out of the waves and out of the cost comparison. Check that its integrations still work after the apps around it move."
+    },
+    {
+      "id": "R02",
+      "name": "platform_not_available_as_standard_vm",
+      "when": {"field": "platform_text", "op": "contains_any", "value": "@blocked_platform_keywords"},
+      "points": {"retain": 5, "repurchase": 2, "refactor": 1, "rehost": -5, "replatform": -4},
+      "ignore_for_dispositions": ["retire"],
+      "reason": "The platform is one that does not run as a standard Azure virtual machine, so a like-for-like move is unlikely to be possible. Replacement or a specialist hosting partner are the realistic routes; confirm against current Azure documentation.",
+      "flag": "platform_needs_specialist_route",
+      "review": true
+    },
+    {
+      "id": "R03",
+      "name": "latency_or_local_hardware",
+      "when": {"field": "text", "op": "contains_any", "value": "@latency_or_hardware_keywords"},
+      "points": {"retain": 4, "rehost": -1},
+      "ignore_for_dispositions": ["retire"],
+      "reason": "The description points to equipment or response times tied to a physical site (machine control, scanners, label printing or similar). These are usually kept near the site, or moved only after a network and latency test.",
+      "flag": "site_bound_equipment",
+      "action": "Measure round-trip latency and loss to the equipment before deciding to move it."
+    },
+    {
+      "id": "R04",
+      "name": "vendor_does_not_support_cloud",
+      "when": {"field": "vendor_supported_in_cloud", "op": "eq", "value": "no"},
+      "points": {"rehost": -3, "replatform": -3, "repurchase": 3, "retain": 3, "refactor": 1},
+      "ignore_for_dispositions": ["retire"],
+      "reason": "The vendor does not support this application in the cloud. Running it there anyway risks losing vendor support, so the choices are to keep it, replace it, or rebuild it.",
+      "flag": "vendor_no_cloud_support",
+      "action": "Get the vendor position in writing and ask what route they offer (hosted, SaaS or a newer version)."
+    },
+    {
+      "id": "R05",
+      "name": "vendor_support_unknown",
+      "when": {"field": "vendor_supported_in_cloud", "op": "eq", "value": "unknown"},
+      "points": {"rehost": -1, "replatform": -1, "retain": 1},
+      "ignore_for_dispositions": ["retire"],
+      "reason": "Vendor support in the cloud has not been confirmed. The score is held back until it is, because moving an application on an assumption is how migrations fail.",
+      "flag": "vendor_support_unknown",
+      "action": "Ask the vendor in writing whether the product is supported on Azure, on which versions, and under what licence terms.",
+      "review": true
+    },
+    {
+      "id": "R06",
+      "name": "critical_and_support_unknown",
+      "when": {"all": [
+        {"field": "vendor_supported_in_cloud", "op": "eq", "value": "unknown"},
+        {"field": "business_criticality", "op": "gte", "value": 4}
+      ]},
+      "points": {"retain": 2},
+      "ignore_for_dispositions": ["retire"],
+      "reason": "Business criticality is {business_criticality} and vendor support is unconfirmed. A critical application should not move on an assumption.",
+      "flag": "critical_and_unconfirmed"
+    },
+    {
+      "id": "R07",
+      "name": "vendor_supports_cloud",
+      "when": {"field": "vendor_supported_in_cloud", "op": "eq", "value": "yes"},
+      "points": {"rehost": 1, "replatform": 1},
+      "reason": "Supported in the cloud, which keeps the lower-change routes open."
+    },
+    {
+      "id": "R08",
+      "name": "support_has_ended",
+      "when": {"field": "eos_status", "op": "eq", "value": "past"},
+      "points": {"replatform": 3, "repurchase": 2, "refactor": 1, "retire": 1, "retain": -2},
+      "ignore_for_dispositions": ["retire"],
+      "reason": "Support for the operating system or product ended on {end_of_support_date}. Staying as it is is not a durable answer. Moving the machine unchanged only changes where the risk sits, so the platform should change or the application should be replaced or retired.",
+      "flag": "end_of_support_passed",
+      "action": "If a stopgap is unavoidable, check Microsoft's current terms for Extended Security Updates and record a dated exit."
+    },
+    {
+      "id": "R09",
+      "name": "support_ends_soon",
+      "when": {"field": "eos_status", "op": "eq", "value": "soon"},
+      "points": {"replatform": 1, "repurchase": 1},
+      "ignore_for_dispositions": ["retire"],
+      "reason": "Support ends on {end_of_support_date}, within the next {eos_soon_months} months. Plan the remediation as part of the move rather than after it.",
+      "flag": "end_of_support_soon"
+    },
+    {
+      "id": "R10",
+      "name": "low_use_low_criticality",
+      "when": {"all": [
+        {"field": "users", "op": "lte", "value": 3},
+        {"field": "business_criticality", "op": "lte", "value": 2}
+      ]},
+      "points": {"retire": 5},
+      "reason": "Only {users} user(s) and business criticality {business_criticality}. Low use and low criticality make this a retirement candidate.",
+      "action": "Confirm with the owner that nobody needs the function, and agree what happens to the data (archive or delete).",
+      "review": true
+    },
+    {
+      "id": "R11",
+      "name": "notes_suggest_retirement",
+      "when": {"field": "notes", "op": "contains_any", "value": "@retire_note_keywords"},
+      "points": {"retire": 4},
+      "reason": "The notes suggest the application is duplicated, superseded or no longer used.",
+      "action": "Confirm with the owner and check for hidden dependants before retiring.",
+      "review": true
+    },
+    {
+      "id": "R12",
+      "name": "unchanged_and_little_used",
+      "when": {"all": [
+        {"field": "change_frequency", "op": "eq", "value": "none"},
+        {"field": "users", "op": "lte", "value": 20},
+        {"field": "business_criticality", "op": "lte", "value": 2}
+      ]},
+      "points": {"retire": 2},
+      "reason": "Nobody changes it, few people use it and it is not critical."
+    },
+    {
+      "id": "R13",
+      "name": "high_criticality_favours_low_change",
+      "when": {"field": "business_criticality", "op": "gte", "value": 4},
+      "points": {"rehost": 1, "refactor": -2, "repurchase": -1, "retire": -4},
+      "reason": "Business criticality is {business_criticality}. A critical application favours the route with the least change, and it is not a retirement candidate."
+    },
+    {
+      "id": "R14",
+      "name": "refactor_needs_own_code",
+      "when": {"field": "tech_class", "op": "ne", "value": "custom"},
+      "points": {"refactor": -4},
+      "reason": "Refactoring needs source code the organisation controls. This is not recorded as in-house custom code."
+    },
+    {
+      "id": "R15",
+      "name": "vendor_offers_saas",
+      "when": {"field": "notes", "op": "contains_any", "value": "@repurchase_note_keywords"},
+      "points": {"repurchase": 4},
+      "reason": "The notes say a SaaS or hosted version of the product exists, which makes repurchase a real option."
+    },
+    {
+      "id": "R16",
+      "name": "custom_and_actively_changed",
+      "when": {"all": [
+        {"field": "tech_class", "op": "eq", "value": "custom"},
+        {"field": "change_frequency", "op": "eq", "value": "high"}
+      ]},
+      "points": {"replatform": 3, "refactor": 2},
+      "reason": "In-house code that changes often gains from modernisation, and the team is already working in it. Moving to a managed platform is the usual first step."
+    },
+    {
+      "id": "R17",
+      "name": "custom_and_stable",
+      "when": {"all": [
+        {"field": "tech_class", "op": "eq", "value": "custom"},
+        {"field": "change_frequency", "op": "in", "value": ["low", "none"]}
+      ]},
+      "points": {"rehost": 1, "refactor": -2},
+      "reason": "Stable in-house code rarely repays the cost of refactoring. Move it first and revisit once it is running in Azure."
+    },
+    {
+      "id": "R18",
+      "name": "database_to_managed_service",
+      "when": {"field": "tech_class", "op": "eq", "value": "database"},
+      "points": {"replatform": 3},
+      "reason": "A database often benefits from a managed service, which removes patching and backup work. Check engine version and feature compatibility first."
+    },
+    {
+      "id": "R19",
+      "name": "file_service_to_managed_service",
+      "when": {"field": "tech_class", "op": "eq", "value": "file_service"},
+      "points": {"replatform": 3},
+      "reason": "File services usually move to a managed file or collaboration service rather than a like-for-like virtual machine. Check permissions, long paths and applications that use drive letters."
+    },
+    {
+      "id": "R20",
+      "name": "shared_platform_service",
+      "when": {"field": "tech_class", "op": "eq", "value": "platform_service"},
+      "points": {"replatform": 2},
+      "reason": "A shared platform service. These usually move to the cloud equivalent, and the landing zone design depends on them, so they are scheduled early."
+    },
+    {
+      "id": "R21",
+      "name": "sensitive_data",
+      "when": {"field": "data_sensitivity", "op": "in", "value": ["high", "restricted"]},
+      "points": {"retain": 1},
+      "ignore_for_dispositions": ["retire", "retain"],
+      "reason": "Data sensitivity is {data_sensitivity}. That does not stop a move, but it needs a data protection review, region and residency checks and tighter access design first.",
+      "flag": "data_protection_review",
+      "action": "Complete a data protection review and confirm region, residency and access controls before cutover."
+    },
+    {
+      "id": "R22",
+      "name": "restrictive_licence",
+      "when": {"field": "licence_model", "op": "contains_any", "value": "@restrictive_licence_keywords"},
+      "points": {"rehost": -2, "replatform": -2, "retain": 2, "repurchase": 1},
+      "ignore_for_dispositions": ["retire"],
+      "reason": "The licence terms ({licence_model}) may not allow the software to run on shared cloud hosts.",
+      "flag": "licence_restriction",
+      "action": "Read the licence with the vendor: some licences tied to hardware or a dongle cannot move."
+    },
+    {
+      "id": "R23",
+      "name": "many_dependants",
+      "when": {"field": "dependents_count", "op": "gte", "value": 5},
+      "points": {"refactor": -1, "repurchase": -1},
+      "reason": "{dependents_count} other applications depend on it, so a change in behaviour ripples out. Prefer a route that keeps interfaces the same."
+    },
+    {
+      "id": "R24",
+      "name": "notes_point_to_architecture_limits",
+      "when": {"all": [
+        {"field": "tech_class", "op": "eq", "value": "custom"},
+        {"field": "notes", "op": "contains_any", "value": "@refactor_note_keywords"}
+      ]},
+      "points": {"refactor": 4},
+      "reason": "The notes describe limits in how the in-house application is built (for example scaling or accumulated technical debt), which is what refactoring addresses.",
+      "action": "Confirm the problem with the owner and size the refactor separately. Avoid doing it during the move itself."
+    }
+  ],
+  "waves": {
+    "max_wave_size": 8,
+    "critical_min_criticality": 4,
+    "critical_min_wave": 2,
+    "shared_service_min_dependents": 3,
+    "shared_service_classes": ["platform_service"],
+    "min_wave_by_disposition": {"refactor": 2, "repurchase": 2},
+    "allow_dependency_in_same_wave": false
+  }
+}

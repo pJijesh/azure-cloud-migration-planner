@@ -1,0 +1,45 @@
+flowchart TB
+  %% An arrow runs from a dependency to the application that needs it, so it points to a later wave.
+  subgraph W1["Wave 1"]
+    direction LR
+    n_A01["A01<br/>Test site<br/>rehost"]
+  end
+  subgraph W2["Wave 2"]
+    direction LR
+    n_S01["S01<br/>Directory<br/>rehost"]
+  end
+  subgraph W3["Wave 3"]
+    direction LR
+    n_A02["A02<br/>File share<br/>replatform"]
+    n_A03["A03<br/>Order database<br/>replatform"]
+    n_S02["S02<br/>Name service<br/>rehost"]
+  end
+  subgraph W4["Wave 4"]
+    direction LR
+    n_A04["A04<br/>Order system<br/>rehost"]
+  end
+  subgraph W5["Wave 5"]
+    direction LR
+    n_A05["A05<br/>Stock system<br/>rehost"]
+    n_A06["A06<br/>Shipping system<br/>rehost"]
+  end
+  subgraph W6["Wave 6"]
+    direction LR
+    n_A07["A07<br/>Reports<br/>replatform"]
+  end
+  n_S01 --> n_A02
+  n_S01 --> n_A03
+  n_A03 --> n_A04
+  n_S01 --> n_A04
+  n_S02 --> n_A04
+  n_A04 --> n_A05
+  n_A06 --> n_A05
+  n_A04 --> n_A06
+  n_A05 --> n_A06
+  n_A04 --> n_A07
+  n_A05 --> n_A07
+  n_S01 --> n_S02
+  classDef cycle fill:#fde2e2,stroke:#b42318,color:#111
+  classDef shared fill:#e0ecff,stroke:#1d4ed8,color:#111
+  class n_A05,n_A06 cycle
+  class n_A04,n_S01,n_S02 shared

@@ -1,0 +1,3 @@
+app_id,disposition,reason
+APP021,retire,Foundry manager confirms the furnace is now scheduled in the MES. Data to be archived first.
+APP035,retain,Hold on premises until the vendor confirms Azure support in writing.

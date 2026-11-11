@@ -1,0 +1,60 @@
+{
+  "label": "ILLUSTRATIVE ASSUMPTIONS for the fictional Wexcombe estate. These are invented placeholder numbers, not real prices or quotes.",
+  "illustrative": true,
+  "currency": "GBP",
+  "horizon_years": 3,
+  "discount_rate": 0.05,
+  "timing": {
+    "landing_zone_months": 3,
+    "months_per_wave": 2,
+    "parallel_run_months": 1
+  },
+  "on_prem": {
+    "annual_cost_inflation": 0.04,
+    "cost_removed_share": 0.9,
+    "hardware_refresh_amount": 400000,
+    "hardware_refresh_month": 20
+  },
+  "azure": {
+    "annual_cost_inflation": 0.02,
+    "run_cost_factor": {
+      "rehost": 0.85,
+      "replatform": 0.7,
+      "refactor": 0.6,
+      "repurchase": 0.8
+    },
+    "retire_archive_annual_per_app": 500
+  },
+  "unit_costs": {
+    "engineer_day_rate": 650,
+    "saas_per_user_per_year": null,
+    "saas_fixed_per_app_per_year": null
+  },
+  "migration_effort": {
+    "days_per_app": {
+      "rehost": 8,
+      "replatform": 20,
+      "refactor": 80,
+      "repurchase": 40,
+      "retire": 4
+    },
+    "criticality_multiplier": {
+      "1": 0.8,
+      "2": 0.9,
+      "3": 1.0,
+      "4": 1.25,
+      "5": 1.5
+    },
+    "contingency": 0.15
+  },
+  "platform": {
+    "landing_zone_one_off": 180000,
+    "landing_zone_annual": 60000,
+    "connectivity_annual": 36000,
+    "programme_management_one_off": 120000
+  },
+  "other_costs": [
+    {"label": "Illustrative training and change management", "kind": "one_off", "scenario": "migrate", "amount": 25000, "month": 2},
+    {"label": "Illustrative allowance for data transfer charges", "kind": "annual", "scenario": "migrate", "amount": 18000, "month": 12}
+  ]
+}

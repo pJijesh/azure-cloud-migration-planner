@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "azure-cloud-migration-planner"
+dynamic = ["version"]
+description = "A planning aid that recommends a migration disposition for each application, sequences migration waves from dependencies, and compares three year run cost on premises and in Azure."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Jijesh Puliyappottammal" }]
+keywords = ["azure", "cloud-migration", "migration-waves", "application-portfolio", "landing-zone"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Office/Business",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://github.com/pJijesh/azure-cloud-migration-planner"
+
+[project.scripts]
+migration-planner = "migration_planner.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "migration_planner.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["migration_planner*"]
+
+[tool.setuptools.package-data]
+migration_planner = ["*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

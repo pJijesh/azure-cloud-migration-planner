@@ -1,0 +1,57 @@
+{
+  "label": "TEMPLATE. Every empty value (null) is an input you must supply from your own quotes, contracts and Azure Migrate assessment. No prices are included.",
+  "illustrative": false,
+  "currency": "GBP",
+  "horizon_years": 3,
+  "discount_rate": null,
+  "timing": {
+    "landing_zone_months": null,
+    "months_per_wave": null,
+    "parallel_run_months": null
+  },
+  "on_prem": {
+    "annual_cost_inflation": null,
+    "cost_removed_share": null,
+    "hardware_refresh_amount": null,
+    "hardware_refresh_month": null
+  },
+  "azure": {
+    "annual_cost_inflation": null,
+    "run_cost_factor": {
+      "rehost": null,
+      "replatform": null,
+      "refactor": null,
+      "repurchase": null
+    },
+    "retire_archive_annual_per_app": null
+  },
+  "unit_costs": {
+    "engineer_day_rate": null,
+    "saas_per_user_per_year": null,
+    "saas_fixed_per_app_per_year": null
+  },
+  "migration_effort": {
+    "days_per_app": {
+      "rehost": null,
+      "replatform": null,
+      "refactor": null,
+      "repurchase": null,
+      "retire": null
+    },
+    "criticality_multiplier": {
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null,
+      "5": null
+    },
+    "contingency": null
+  },
+  "platform": {
+    "landing_zone_one_off": null,
+    "landing_zone_annual": null,
+    "connectivity_annual": null,
+    "programme_management_one_off": null
+  },
+  "other_costs": []
+}

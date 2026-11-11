@@ -1,0 +1,15 @@
+case,direction,stay_total,plan_total,saving,saving_change_vs_base,break_even_month
+Current on premises run cost,adverse (-20%),4692824.32,5670493.02,-977668.70,-443408.58,not within horizon
+Current on premises run cost,favourable (+20%),6839236.48,6930088.02,-90851.54,443408.58,not within horizon
+Azure run cost,adverse (+20%),5766030.40,6697893.61,-931863.21,-397603.09,not within horizon
+Azure run cost,favourable (-20%),5766030.40,5902687.43,-136657.03,397603.09,not within horizon
+Migration effort,adverse (+20%),5766030.40,6377881.02,-611850.62,-77590.50,not within horizon
+Migration effort,favourable (-20%),5766030.40,6222700.02,-456669.62,77590.50,not within horizon
+Share of on premises cost actually removed,adverse (-20%),5766030.40,6795091.77,-1029061.37,-494801.25,not within horizon
+Share of on premises cost actually removed,favourable (+20%),5766030.40,6025400.94,-259370.54,274889.58,not within horizon
+Months per wave (programme speed),adverse (+20%),5766030.40,6365566.11,-599535.71,-65275.59,not within horizon
+Months per wave (programme speed),favourable (-20%),5766030.40,6270493.61,-504463.21,29796.91,not within horizon
+Landing zone and connectivity running cost,adverse (+20%),5766030.40,6354250.20,-588219.80,-53959.68,not within horizon
+Landing zone and connectivity running cost,favourable (-20%),5766030.40,6246330.84,-480300.44,53959.68,not within horizon
+All of the above together,all adverse,4692824.32,6563221.94,-1870397.62,-1336137.50,not within horizon
+All of the above together,all favourable,6839236.48,5952109.93,887126.55,1421386.67,21

@@ -1,0 +1,4 @@
+# Generated outputs are compared byte for byte in the tests, so keep line endings stable.
+* text=auto eol=lf
+*.svg text eol=lf
+*.png binary

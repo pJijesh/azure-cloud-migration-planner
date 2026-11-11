@@ -1,0 +1,16 @@
+measure,stay_on_premises_GBP,follow_plan_GBP,difference_GBP
+total_cost_over_horizon,5766030.40,6300290.52,534260.12
+year_1,1719000.00,2251478.22,532478.22
+year_2,2187760.00,2251373.43,63613.43
+year_3,1859270.40,1797438.87,-61831.53
+final_year_recurring_run_cost,1859270.40,1797438.87,-61831.53
+present_value_at_discount_rate,5344065.10,5874174.73,530109.63
+category_on_prem_run,5366030.40,3148987.50,-2217042.90
+category_azure_run,0.00,1988015.47,1988015.47
+category_platform_run,0.00,269798.40,269798.40
+category_other_recurring,0.00,37500.00,37500.00
+category_migration_one_off,0.00,387952.50,387952.50
+category_platform_one_off,0.00,300000.00,300000.00
+category_other_one_off,0.00,25000.00,25000.00
+category_hardware_refresh,400000.00,143036.65,-256963.35
+break_even_month,,not within horizon,

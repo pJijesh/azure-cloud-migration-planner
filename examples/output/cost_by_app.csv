@@ -1,0 +1,43 @@
+app_id,name,disposition,wave,cutover_month,on_prem_annual_cost,azure_annual_cost,azure_cost_method,migration_effort_cost,stay_total,plan_run_total
+APP001,Directory services (domain controllers),rehost,2,7,38000.00,32300.00,factor,8970.00,118620.80,114671.33
+APP002,DNS and DHCP,rehost,3,9,9000.00,7650.00,factor,8970.00,28094.40,27234.00
+APP003,Internal certificate authority,rehost,3,9,6000.00,5100.00,factor,7475.00,18729.60,18156.00
+APP004,Backup platform,rehost,3,9,52000.00,44200.00,factor,7475.00,162323.20,157352.00
+APP005,Monitoring and alerting,rehost,4,11,14000.00,11900.00,factor,5980.00,43702.40,42480.67
+APP006,Print servers,replatform,3,9,11000.00,7700.00,factor,13455.00,34337.60,29473.84
+APP007,SFTP and EDI gateway,rehost,4,11,28000.00,23800.00,factor,7475.00,87404.80,84961.33
+APP008,ERP application tier,rehost,5,13,310000.00,263500.00,factor,8970.00,967696.00,944647.50
+APP009,ERP database,replatform,3,9,120000.00,84000.00,factor,22425.00,374592.00,321532.80
+APP010,ERP test and training environment,rehost,1,5,18000.00,15300.00,factor,5382.00,56188.80,54168.00
+APP011,Group consolidation and reporting,rehost,7,17,36000.00,30600.00,factor,7475.00,112377.60,110529.00
+APP012,Payroll,retain,,,64000.00,0.00,,0.00,199782.40,199782.40
+APP013,Treasury and bank connectivity,rehost,7,17,41000.00,34850.00,factor,8970.00,127985.60,125880.25
+APP014,Fixed asset register (old),retire,,5,7000.00,500.00,archive,2392.00,21851.20,6131.99
+APP015,Head office file server,replatform,4,11,34000.00,23800.00,factor,18687.50,106134.40,92234.29
+APP016,Castings plant file server,replatform,3,9,18000.00,12600.00,factor,14950.00,56188.80,48229.92
+APP017,Distribution centre file server,replatform,3,9,16000.00,11200.00,factor,14950.00,49945.60,42871.04
+APP018,Engineering drawings vault,rehost,5,13,29000.00,24650.00,factor,7475.00,90526.40,88370.25
+APP019,Shop floor controller gateway,retain,,,22000.00,0.00,,0.00,68675.20,68675.20
+APP020,Manufacturing execution system,retain,,,96000.00,0.00,,0.00,299673.60,299673.60
+APP021,Furnace scheduling (legacy),retain,,,6000.00,0.00,,0.00,18729.60,18729.60
+APP022,Quality management,repurchase,6,15,18000.00,14400.00,factor,29900.00,56188.80,53432.64
+APP023,Maintenance management,rehost,6,15,15000.00,12750.00,factor,5980.00,46824.00,45881.25
+APP024,CAD licence server,retain,,,19000.00,0.00,,0.00,59310.40,59310.40
+APP025,Costing database,rehost,1,5,1500.00,1275.00,factor,5382.00,4682.40,4514.00
+APP026,Warehouse management system,rehost,6,15,118000.00,100300.00,factor,8970.00,368348.80,360932.50
+APP027,Transport management system,rehost,6,15,54000.00,45900.00,factor,7475.00,168566.40,165172.50
+APP028,Handheld scanner service,retain,,,12000.00,0.00,,0.00,37459.20,37459.20
+APP029,Carrier label printing,replatform,7,17,8000.00,5600.00,factor,14950.00,24972.80,22599.52
+APP030,Customer portal and order entry,refactor,7,17,46000.00,27600.00,factor,59800.00,143593.60,122424.40
+APP031,Supplier portal,replatform,6,15,12000.00,8400.00,factor,13455.00,37459.20,33455.28
+APP032,Pricing engine,rehost,6,15,22000.00,18700.00,factor,7475.00,68675.20,67292.50
+APP033,Contracts and rebates,rehost,6,15,17000.00,14450.00,factor,5980.00,53067.20,51998.75
+APP034,Customer master data service,rehost,6,15,26000.00,22100.00,factor,7475.00,81161.60,79527.50
+APP035,Demand planning,rehost,8,19,33000.00,28050.00,factor,5980.00,103012.80,101697.75
+APP036,Business intelligence and reporting,replatform,7,17,58000.00,40600.00,factor,14950.00,181052.80,163846.52
+APP037,Credit control,replatform,7,17,14000.00,9800.00,factor,14950.00,43702.40,39549.16
+APP038,Time and attendance,rehost,3,9,17000.00,14450.00,factor,5980.00,53067.20,51442.00
+APP039,Old intranet,retire,,5,4500.00,500.00,archive,2392.00,14047.20,4414.09
+APP040,Customer relationship management,retain,,,72000.00,0.00,,0.00,224755.20,224755.20
+APP041,Email and collaboration,retain,,,168000.00,0.00,,0.00,524428.80,524428.80
+APP042,Public website,rehost,1,5,9000.00,7650.00,factor,5382.00,28094.40,27084.00

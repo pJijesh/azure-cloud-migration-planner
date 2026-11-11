@@ -1,0 +1,14 @@
+flowchart LR
+  inv[/"Inventory CSV<br/>one row per application"/] --> assess["assess<br/>score the six dispositions,<br/>list the reasons"]
+  rules[/"Rules JSON<br/>(optional)"/] -.-> assess
+  ovr[/"Human overrides CSV<br/>(optional)"/] -.-> assess
+  assess --> waves["waves<br/>dependency graph, cycles,<br/>wave size and critical rule"]
+  waves --> cost["cost<br/>month by month,<br/>stay versus plan"]
+  assume[/"Cost assumptions JSON<br/>(you supply every number)"/] --> cost
+  cost --> plan[["plan.md, plan.json<br/>and CSV files"]]
+  assess --> plan
+  waves --> plan
+  classDef input fill:#e0ecff,stroke:#1d4ed8,color:#111
+  classDef step fill:#eef6ee,stroke:#2f7d32,color:#111
+  class inv,rules,ovr,assume input
+  class assess,waves,cost step

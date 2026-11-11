@@ -1,0 +1,84 @@
+flowchart TB
+  %% An arrow runs from a dependency to the application that needs it, so it points to a later wave.
+  subgraph W1["Wave 1"]
+    direction LR
+    n_APP010["APP010<br/>ERP test and training environment<br/>rehost"]
+    n_APP025["APP025<br/>Costing database<br/>rehost"]
+    n_APP042["APP042<br/>Public website<br/>rehost"]
+  end
+  subgraph W2["Wave 2"]
+    direction LR
+    n_APP001["APP001<br/>Directory services (domain controllers)<br/>rehost"]
+  end
+  subgraph W3["Wave 3"]
+    direction LR
+    n_APP002["APP002<br/>DNS and DHCP<br/>rehost"]
+    n_APP003["APP003<br/>Internal certificate authority<br/>rehost"]
+    n_APP004["APP004<br/>Backup platform<br/>rehost"]
+    n_APP006["APP006<br/>Print servers<br/>replatform"]
+    n_APP009["APP009<br/>ERP database<br/>replatform"]
+    n_APP016["APP016<br/>Castings plant file server<br/>replatform"]
+    n_APP017["APP017<br/>Distribution centre file server<br/>replatform"]
+    n_APP038["APP038<br/>Time and attendance<br/>rehost"]
+  end
+  subgraph W4["Wave 4"]
+    direction LR
+    n_APP005["APP005<br/>Monitoring and alerting<br/>rehost"]
+    n_APP007["APP007<br/>SFTP and EDI gateway<br/>rehost"]
+    n_APP015["APP015<br/>Head office file server<br/>replatform"]
+  end
+  subgraph W5["Wave 5"]
+    direction LR
+    n_APP008["APP008<br/>ERP application tier<br/>rehost"]
+    n_APP018["APP018<br/>Engineering drawings vault<br/>rehost"]
+  end
+  subgraph W6["Wave 6"]
+    direction LR
+    n_APP022["APP022<br/>Quality management<br/>repurchase"]
+    n_APP023["APP023<br/>Maintenance management<br/>rehost"]
+    n_APP026["APP026<br/>Warehouse management system<br/>rehost"]
+    n_APP027["APP027<br/>Transport management system<br/>rehost"]
+    n_APP031["APP031<br/>Supplier portal<br/>replatform"]
+    n_APP032["APP032<br/>Pricing engine<br/>rehost"]
+    n_APP033["APP033<br/>Contracts and rebates<br/>rehost"]
+    n_APP034["APP034<br/>Customer master data service<br/>rehost"]
+  end
+  subgraph W7["Wave 7"]
+    direction LR
+    n_APP011["APP011<br/>Group consolidation and reporting<br/>rehost"]
+    n_APP013["APP013<br/>Treasury and bank connectivity<br/>rehost"]
+    n_APP029["APP029<br/>Carrier label printing<br/>replatform"]
+    n_APP030["APP030<br/>Customer portal and order entry<br/>refactor"]
+    n_APP036["APP036<br/>Business intelligence and reporting<br/>replatform"]
+    n_APP037["APP037<br/>Credit control<br/>replatform"]
+  end
+  subgraph W8["Wave 8"]
+    direction LR
+    n_APP035["APP035<br/>Demand planning<br/>rehost"]
+  end
+  n_APP002 --> n_APP005
+  n_APP002 --> n_APP007
+  n_APP007 --> n_APP008
+  n_APP009 --> n_APP008
+  n_APP009 --> n_APP011
+  n_APP007 --> n_APP013
+  n_APP002 --> n_APP015
+  n_APP015 --> n_APP018
+  n_APP007 --> n_APP026
+  n_APP027 --> n_APP026
+  n_APP026 --> n_APP027
+  n_APP026 --> n_APP029
+  n_APP026 --> n_APP030
+  n_APP032 --> n_APP030
+  n_APP033 --> n_APP032
+  n_APP034 --> n_APP033
+  n_APP032 --> n_APP034
+  n_APP036 --> n_APP035
+  n_APP009 --> n_APP036
+  n_APP026 --> n_APP036
+  n_APP027 --> n_APP036
+  %% 34 link(s) to widely used shared services are not drawn
+  classDef cycle fill:#fde2e2,stroke:#b42318,color:#111
+  classDef shared fill:#e0ecff,stroke:#1d4ed8,color:#111
+  class n_APP026,n_APP027,n_APP032,n_APP033,n_APP034 cycle
+  class n_APP001,n_APP002,n_APP003,n_APP004,n_APP005,n_APP006,n_APP007,n_APP008,n_APP009 shared

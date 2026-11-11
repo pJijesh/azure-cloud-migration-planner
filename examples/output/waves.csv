@@ -1,0 +1,43 @@
+wave,app_id,name,disposition,business_criticality,shared_service,cycle_group,depends_on,status
+1,APP010,ERP test and training environment,rehost,2,no,,,scheduled
+1,APP025,Costing database,rehost,2,no,,,scheduled
+1,APP042,Public website,rehost,2,no,,,scheduled
+2,APP001,Directory services (domain controllers),rehost,5,yes,,,scheduled
+3,APP002,DNS and DHCP,rehost,5,yes,,APP001,scheduled
+3,APP003,Internal certificate authority,rehost,4,yes,,APP001,scheduled
+3,APP004,Backup platform,rehost,4,yes,,APP001,scheduled
+3,APP006,Print servers,replatform,2,yes,,APP001,scheduled
+3,APP009,ERP database,replatform,5,yes,,APP001,scheduled
+3,APP016,Castings plant file server,replatform,3,no,,APP001,scheduled
+3,APP017,Distribution centre file server,replatform,3,no,,APP001,scheduled
+3,APP038,Time and attendance,rehost,3,no,,APP001;APP012,scheduled
+4,APP005,Monitoring and alerting,rehost,3,yes,,APP001;APP002,scheduled
+4,APP007,SFTP and EDI gateway,rehost,4,yes,,APP001;APP002,scheduled
+4,APP015,Head office file server,replatform,4,no,,APP001;APP002,scheduled
+5,APP008,ERP application tier,rehost,5,yes,,APP001;APP007;APP009,scheduled
+5,APP018,Engineering drawings vault,rehost,4,no,,APP001;APP015,scheduled
+6,APP022,Quality management,repurchase,3,no,,APP001;APP008,scheduled
+6,APP023,Maintenance management,rehost,3,no,,APP001;APP008,scheduled
+6,APP026,Warehouse management system,rehost,5,yes,CYC-1,APP001;APP007;APP008;APP027,scheduled
+6,APP027,Transport management system,rehost,4,yes,CYC-1,APP001;APP008;APP026,scheduled
+6,APP031,Supplier portal,replatform,2,no,,APP001;APP008,scheduled
+6,APP032,Pricing engine,rehost,4,no,CYC-2,APP033,scheduled
+6,APP033,Contracts and rebates,rehost,3,no,CYC-2,APP008;APP034,scheduled
+6,APP034,Customer master data service,rehost,4,no,CYC-2,APP008;APP032,scheduled
+7,APP011,Group consolidation and reporting,rehost,4,no,,APP008;APP009,scheduled
+7,APP013,Treasury and bank connectivity,rehost,5,no,,APP007;APP008,scheduled
+7,APP029,Carrier label printing,replatform,3,no,,APP026,scheduled
+7,APP030,Customer portal and order entry,refactor,3,no,,APP001;APP008;APP026;APP032,scheduled
+7,APP036,Business intelligence and reporting,replatform,3,no,,APP001;APP008;APP009;APP026;APP027,scheduled
+7,APP037,Credit control,replatform,3,no,,APP001;APP008,scheduled
+8,APP035,Demand planning,rehost,3,no,,APP008;APP036,scheduled
+,APP012,Payroll,retain,5,,,,not scheduled: not in scope (already SaaS or otherwise unchanged)
+,APP014,Fixed asset register (old),retire,1,,,,"not scheduled: retire (decommission task, not a migration)"
+,APP019,Shop floor controller gateway,retain,5,,,APP001,not scheduled: retained on premises
+,APP020,Manufacturing execution system,retain,5,,,APP001;APP008;APP009;APP019,not scheduled: retained on premises
+,APP021,Furnace scheduling (legacy),retain,3,,,APP019,not scheduled: retained on premises
+,APP024,CAD licence server,retain,3,,,APP001,not scheduled: retained on premises
+,APP028,Handheld scanner service,retain,4,,,APP001;APP026,not scheduled: retained on premises
+,APP039,Old intranet,retire,1,,,APP001,"not scheduled: retire (decommission task, not a migration)"
+,APP040,Customer relationship management,retain,4,,,APP008,not scheduled: not in scope (already SaaS or otherwise unchanged)
+,APP041,Email and collaboration,retain,5,,,,not scheduled: not in scope (already SaaS or otherwise unchanged)

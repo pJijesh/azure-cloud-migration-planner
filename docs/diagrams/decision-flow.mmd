@@ -1,0 +1,24 @@
+flowchart TD
+  start([Application in the inventory]) --> q1{Already delivered<br/>as SaaS?}
+  q1 -- yes --> r0[Not in scope.<br/>Check its integrations.]
+  q1 -- no --> q2{Still needed?<br/>Few users, low criticality,<br/>duplicated or superseded}
+  q2 -- no --> retire[Retire<br/>archive data, switch off]
+  q2 -- yes --> q3{Can it run in Azure?<br/>Vendor support, platform,<br/>licence, site equipment, latency}
+  q3 -- no --> q4{Does a replacement<br/>exist that fits?}
+  q4 -- yes --> repurchase[Repurchase]
+  q4 -- no --> retain[Retain<br/>revisit on a date]
+  q3 -- unknown --> ask[Ask the vendor in writing.<br/>Do not move a critical app<br/>on an assumption.]
+  ask --> q3
+  q3 -- yes --> q5{Is support already over,<br/>or a SaaS version on offer?}
+  q5 -- SaaS version --> repurchase
+  q5 -- support over --> replatform[Replatform<br/>newer OS or managed service]
+  q5 -- neither --> q6{Own code with<br/>real architecture limits?}
+  q6 -- yes --> refactor[Refactor<br/>after the move, as its own project]
+  q6 -- no --> q7{Database or file service?}
+  q7 -- yes --> replatform
+  q7 -- no --> rehost[Rehost<br/>move as it is]
+  rehost --> later[Optimise and modernise later]
+  classDef out fill:#e0ecff,stroke:#1d4ed8,color:#111
+  classDef stop fill:#fde2e2,stroke:#b42318,color:#111
+  class rehost,replatform,refactor,repurchase out
+  class retire,retain,r0 stop
