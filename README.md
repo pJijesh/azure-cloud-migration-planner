@@ -140,7 +140,7 @@ A fictional manufacturing and distribution group with 42 applications (ERP, fina
 - **Run and passing:** the full test suite (see below), the quick start command, the CLI end to end on the worked example, and a byte-for-byte comparison of the committed example output with a fresh run. The generated documentation check passes.
 - **Diagrams:** the three Mermaid diagrams were rendered with Mermaid CLI and the images were looked at to check they are legible.
 - **Microsoft guidance and product names** were checked against Microsoft Learn and lifecycle pages on 11 November 2026 (see [sources and verification](docs/sources-and-verification.md)), and a few service names were not on the pages fetched. Re-check before relying on any detail.
-- **Not verified:** nothing has been run against an Azure tenant, Azure Migrate or a real inventory. The GitHub Actions workflow has been written and its commands run locally, but the workflow itself has not yet run on GitHub. Python 3.10 to 3.13 are in the CI matrix, but the suite was run locally on one Python version only.
+- **Not verified:** nothing has been run against an Azure tenant, Azure Migrate or a real inventory. The test suite runs in GitHub Actions on Python 3.10 to 3.13, which checks the code, not the planning advice.
 - **No real data:** every name, owner, number and date in the examples is invented or illustrative.
 
 ## Tests
